@@ -59,23 +59,25 @@ jobs:
 
       - name: Run MCP server tests
         run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
           $env:PYTHONPATH = Join-Path $env:GITHUB_WORKSPACE 'docker'
           $servers = @('fs-mcp', 'content-mcp', 'template-mcp', 'graph-mcp', 'registry-mcp')
           foreach ($server in $servers) {
             Write-Host "Testing $server..."
             Push-Location "docker/mcp-servers/$server"
-            python -m pytest tests/ -v --tb=short
+            & $pythonPath -m pytest tests/ -v --tb=short
             Pop-Location
           }
 
       - name: Run agent tests
         run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
           $env:PYTHONPATH = Join-Path $env:GITHUB_WORKSPACE 'docker'
           $agents = @('venture-generator', 'site-creator', 'content-writer', 'graph-builder', 'qa-validator')
           foreach ($agent in $agents) {
             Write-Host "Testing $agent..."
             Push-Location "docker/agents/$agent"
-            python -m pytest tests/ -v --tb=short
+            & $pythonPath -m pytest tests/ -v --tb=short
             Pop-Location
           }
 
@@ -145,10 +147,14 @@ jobs:
         run: npx tsx src/scripts/validate-structure.ts
 
       - name: Run health check
-        run: python src/scripts/health-check.py sites/leo-global-holdings
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath src/scripts/health-check.py sites/leo-global-holdings
 
       - name: Run drift detection
-        run: python src/scripts/drift-detection.py .
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath src/scripts/drift-detection.py .
 
       - name: Stop MCP servers
         if: always()
