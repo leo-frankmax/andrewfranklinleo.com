@@ -6,21 +6,28 @@
   <title>Glosbe | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="Connecting Every Community">
+  <meta property="og:title" content="Glosbe | Leo Global Holdings">
+  <meta property="og:description" content="Connecting Every Community">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/glosbe/" aria-current="page">Glosbe</a></li></ol></nav>
-  <main>
-    <section class="hero group-glosbe">
+  <main id="main-content">
+    <section class="hero group-glosbe parallax">
+      <div class="hero-bg" role="img" aria-label="Glosbe"></div>
       <span class="hero-tag"></span>
       <h1>Glosbe</h1>
       <p class="mission">Connecting Every Community</p>
+      <a href="#ventures" class="hero-cta btn-ripple">Our Ventures <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="section">
+    <section class="section" id="ventures">
       <div class="section-header"><h2>Our Ventures</h2></div>
-      <div class="grid"></div>
+      <div class="grid stagger"></div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>

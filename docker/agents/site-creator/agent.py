@@ -135,25 +135,23 @@ class SiteCreator(AgentBase):
         }
         (portal_dir / '_conglomerate.json').write_text(json.dumps(meta, indent=2))
 
-        venture_count = sum(len(g.get('ventures', [])) for g in data.get('groups', []))
-        offering_count = sum(
-            len(v.get('offerings', []))
-            for g in data.get('groups', [])
-            for v in g.get('ventures', [])
-        )
+        group_count = len(data.get('groups', []))
+        venture_count = len(data.get('ventures', []))
+        offering_count = sum(len(v.get('offerings', [])) for v in data.get('ventures', []))
 
         groups_html = ''
         for group in data.get('groups', []):
             if group.get('type') == 'group':
                 gid = group.get('id', '')
                 color = gid.split('-')[0] if gid else ''
+                tagline = group.get('mission', '').split('—')[0].strip() if '—' in group.get('mission', '') else ''
                 ventures_links = ''.join(
                     f'<span>{v.get("name", "")}</span>'
                     for v in data.get('ventures', [])
                     if v.get('parentId') == gid
-                )[:300]
+                )[:400]
                 groups_html += f'''<a href="/{gid}/" class="ecosystem-card {color} fade-in">
-          <div class="card-label">{group.get("mission", "").split("—")[0].strip() if "—" in group.get("mission", "") else ""}</div>
+          <div class="card-label">{tagline}</div>
           <h3>{group.get("name", "")}</h3>
           <p class="mission">{group.get("mission", "")}</p>
           <div class="ventures-list">{ventures_links}</div>
@@ -167,28 +165,37 @@ class SiteCreator(AgentBase):
   <title>{meta['name']} | Enterprise Ecosystem</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="/styles.css">
+  <meta name="description" content="{meta['mission'][:160]}">
+  <meta property="og:title" content="{meta['name']} | Enterprise Ecosystem">
+  <meta property="og:description" content="{meta['mission'][:160]}">
+  <meta property="og:type" content="website">
+  <style>.hero-bg{{background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=85')}}</style>
 </head>
 <body>
-  <main>
-    <section class="hero">
+  <main id="main-content">
+    <section class="hero group-root parallax">
+      <div class="hero-bg" role="img" aria-label="Earth from space"></div>
       <span class="hero-tag">Enterprise Ecosystem</span>
       <h1>{meta['name']}</h1>
       <p class="mission">{meta['mission']}</p>
+      <a href="#ecosystem" class="hero-cta btn-ripple">Explore Our Ecosystem <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="stats-bar">
+    <section class="stats-bar" id="ecosystem">
       <div class="stats-grid">
-        <div class="stat-item fade-in"><div class="stat-number">{len(data.get('groups', []))}</div><div class="stat-label">Ecosystem Pillars</div></div>
+        <div class="stat-item fade-in"><div class="stat-number">{group_count}</div><div class="stat-label">Ecosystem Pillars</div></div>
         <div class="stat-item fade-in"><div class="stat-number">{venture_count}</div><div class="stat-label">Active Ventures</div></div>
         <div class="stat-item fade-in"><div class="stat-number">{offering_count}+</div><div class="stat-label">Global Offerings</div></div>
       </div>
     </section>
     <section class="section">
       <div class="section-header"><h2>Our Ecosystem</h2><p>Four pillars of enterprise excellence, each driving transformation across its domain.</p></div>
-      <div class="ecosystem-grid">{groups_html}</div>
+      <div class="ecosystem-grid stagger">{groups_html}</div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>"""
         (portal_dir / 'index.html').write_text(html)
@@ -196,12 +203,14 @@ class SiteCreator(AgentBase):
     def _render_group_page(self, group: dict) -> str:
         gid = group.get('id', '')
         color = gid.split('-')[0] if gid else ''
+        tagline = group.get('mission', '').split('—')[0].strip() if '—' in group.get('mission', '') else ''
         ventures_html = ''
         for venture in group.get('ventures', []):
             vid = venture.get('id', '')
             vname = venture.get('name', '')
             vmission = venture.get('mission', '')
-            ventures_html += f'<a href="/{gid}/{vid}/" class="card fade-in"><div class="card-icon">{vname[0] if vname else "V"}</div><h3>{vname}</h3><p>{vmission}</p></a>\n'
+            first = vname[0] if vname else 'V'
+            ventures_html += f'<a href="/{gid}/{vid}/" class="card fade-in"><div class="card-icon">{first}</div><h3>{vname}</h3><p>{vmission}</p></a>\n'
 
         return f"""<!DOCTYPE html>
 <html lang="en">
@@ -211,22 +220,29 @@ class SiteCreator(AgentBase):
   <title>{group.get('name', '')} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="{group.get('mission', '')[:160]}">
+  <meta property="og:title" content="{group.get('name', '')} | Leo Global Holdings">
+  <meta property="og:description" content="{group.get('mission', '')[:160]}">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/" aria-current="page">{group.get('name', '')}</a></li></ol></nav>
-  <main>
-    <section class="hero group-{color}">
-      <span class="hero-tag">{group.get('mission', '').split('—')[0].strip() if '—' in group.get('mission', '') else ''}</span>
+  <main id="main-content">
+    <section class="hero group-{color} parallax">
+      <div class="hero-bg" role="img" aria-label="{group.get('name', '')}"></div>
+      <span class="hero-tag">{tagline}</span>
       <h1>{group.get('name', '')}</h1>
       <p class="mission">{group.get('mission', '')}</p>
+      <a href="#ventures" class="hero-cta btn-ripple">Our Ventures <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="section">
+    <section class="section" id="ventures">
       <div class="section-header"><h2>Our Ventures</h2></div>
-      <div class="grid">{ventures_html}</div>
+      <div class="grid stagger">{ventures_html}</div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>"""
 
@@ -234,6 +250,7 @@ class SiteCreator(AgentBase):
         gid = group.get('id', '')
         vid = venture.get('id', '')
         color = gid.split('-')[0] if gid else ''
+        tagline = venture.get('mission', '').split('—')[0].strip() if '—' in venture.get('mission', '') else ''
         offerings_html = ''
         for offering in venture.get('offerings', []):
             oid = offering.get('id', '')
@@ -249,22 +266,29 @@ class SiteCreator(AgentBase):
   <title>{venture.get('name', '')} | {group.get('name', '')} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="{venture.get('mission', '')[:160]}">
+  <meta property="og:title" content="{venture.get('name', '')} | {group.get('name', '')}">
+  <meta property="og:description" content="{venture.get('mission', '')[:160]}">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/">{group.get('name', '')}</a></li><li><a href="/{gid}/{vid}/" aria-current="page">{venture.get('name', '')}</a></li></ol></nav>
-  <main>
-    <section class="hero group-{color}">
-      <span class="hero-tag">{venture.get('mission', '').split('—')[0].strip() if '—' in venture.get('mission', '') else ''}</span>
+  <main id="main-content">
+    <section class="hero group-{color} parallax">
+      <div class="hero-bg" role="img" aria-label="{venture.get('name', '')}"></div>
+      <span class="hero-tag">{tagline}</span>
       <h1>{venture.get('name', '')}</h1>
       <p class="mission">{venture.get('mission', '')}</p>
+      <a href="#offerings" class="hero-cta btn-ripple">Our Offerings <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="section">
+    <section class="section" id="offerings">
       <div class="section-header"><h2>Our Offerings</h2></div>
-      <div class="grid">{offerings_html}</div>
+      <div class="grid stagger">{offerings_html}</div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>"""
 
@@ -273,37 +297,50 @@ class SiteCreator(AgentBase):
         gid = venture.get('parentId', '')
         oid = offering.get('id', '')
         color = gid.split('-')[0] if gid else ''
+        gname = gid.replace('-', ' ').title()
+        vname = venture.get('name', '')
+        oname = offering.get('name', '')
+        odesc = offering.get('description', '')
+        first = oname[0] if oname else 'O'
 
         return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{offering.get('name', '')} | {venture.get('name', '')} | Leo Global Holdings</title>
+  <title>{oname} | {vname} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="{odesc[:160] if odesc else oname}">
+  <meta property="og:title" content="{oname} | {vname}">
+  <meta property="og:description" content="{odesc[:160] if odesc else ''}">
 </head>
 <body>
-  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/">{gid.replace('-', ' ').title()}</a></li><li><a href="/{gid}/{vid}/">{venture.get('name', '')}</a></li><li><a href="/{gid}/{vid}/{oid}/" aria-current="page">{offering.get('name', '')}</a></li></ol></nav>
-  <main>
-    <section class="hero group-{color}">
-      <span class="hero-tag">{venture.get('name', '')}</span>
-      <h1>{offering.get('name', '')}</h1>
-      <p class="mission">{offering.get('description', '')}</p>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/">{gname}</a></li><li><a href="/{gid}/{vid}/">{vname}</a></li><li><a href="/{gid}/{vid}/{oid}/" aria-current="page">{oname}</a></li></ol></nav>
+  <main id="main-content">
+    <section class="hero group-{color} parallax">
+      <div class="hero-bg" role="img" aria-label="{oname}"></div>
+      <span class="hero-tag">{vname}</span>
+      <h1>{oname}</h1>
+      <p class="mission">{odesc}</p>
     </section>
     <section class="content-section">
-      <h2>About {offering.get('name', '')}</h2>
-      <p>{offering.get('description', '')}</p>
+      <h2>About {oname}</h2>
+      <p>{odesc}</p>
       <h2>Key Capabilities</h2>
       <ul>
         <li>Industry-leading expertise and global reach</li>
         <li>Data-driven approach with measurable outcomes</li>
         <li>Integrated solutions across the value chain</li>
+        <li>Proven methodologies developed over decades</li>
       </ul>
+      <h2>The {vname} Advantage</h2>
+      <p>As part of {vname}, this offering benefits from deep domain expertise, cross-functional collaboration, and a global network of professionals dedicated to excellence.</p>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>"""
 

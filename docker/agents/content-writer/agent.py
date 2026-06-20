@@ -78,6 +78,9 @@ class ContentWriter(AgentBase):
         vid = venture.get('id', '')
         oid = offering.get('id', '')
         color = gid.split('-')[0] if gid else ''
+        gname = gid.replace('-', ' ').title()
+        odesc = offering.get('description', '')
+        first = name[0] if name else 'O'
         return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,15 +89,20 @@ class ContentWriter(AgentBase):
   <title>{name} | {venture_name} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="{odesc[:160] if odesc else name}">
+  <meta property="og:title" content="{name} | {venture_name}">
+  <meta property="og:description" content="{odesc[:160] if odesc else ''}">
 </head>
 <body>
-  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/">{gid.replace('-', ' ').title()}</a></li><li><a href="/{gid}/{vid}/">{venture_name}</a></li><li><a href="/{gid}/{vid}/{oid}/" aria-current="page">{name}</a></li></ol></nav>
-  <main>
-    <section class="hero group-{color}">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/">{gname}</a></li><li><a href="/{gid}/{vid}/">{venture_name}</a></li><li><a href="/{gid}/{vid}/{oid}/" aria-current="page">{name}</a></li></ol></nav>
+  <main id="main-content">
+    <section class="hero group-{color} parallax">
+      <div class="hero-bg" role="img" aria-label="{name}"></div>
       <span class="hero-tag">{venture_name}</span>
       <h1>{name}</h1>
-      <p class="mission">Part of {venture_name} — delivering exceptional value to stakeholders.</p>
+      <p class="mission">Part of {venture_name} — delivering exceptional value to stakeholders through professional excellence and proven methodologies.</p>
     </section>
     <section class="content-section">
       <h2>About {name}</h2>
@@ -104,12 +112,13 @@ class ContentWriter(AgentBase):
         <li>Professional excellence and industry expertise</li>
         <li>Proven methodologies with measurable outcomes</li>
         <li>Integrated solutions across the value chain</li>
+        <li>Deep domain knowledge and global perspective</li>
       </ul>
-      <h2>Use Cases</h2>
-      <p>Organizations across industries leverage {name} to achieve their strategic objectives and drive transformational growth.</p>
+      <h2>The {venture_name} Advantage</h2>
+      <p>As part of {venture_name}, this offering leverages cross-functional collaboration, proprietary frameworks, and a worldwide network of professionals dedicated to delivering measurable results for every engagement.</p>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>"""
 
@@ -118,6 +127,8 @@ class ContentWriter(AgentBase):
         mission = venture.get('mission', '')
         vid = venture.get('id', '')
         color = group_id.split('-')[0] if group_id else ''
+        gname = group_id.replace('-', ' ').title()
+        tagline = mission.split('—')[0].strip() if '—' in mission else ''
         offerings_html = ''
         for o in venture.get('offerings', []):
             oid = o.get('id', '')
@@ -132,22 +143,29 @@ class ContentWriter(AgentBase):
   <title>{name} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="{mission[:160]}">
+  <meta property="og:title" content="{name} | Leo Global Holdings">
+  <meta property="og:description" content="{mission[:160]}">
 </head>
 <body>
-  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{group_id}/">{group_id.replace('-', ' ').title()}</a></li><li><a href="/{group_id}/{vid}/" aria-current="page">{name}</a></li></ol></nav>
-  <main>
-    <section class="hero group-{color}">
-      <span class="hero-tag">{mission.split('—')[0].strip() if '—' in mission else ''}</span>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{group_id}/">{gname}</a></li><li><a href="/{group_id}/{vid}/" aria-current="page">{name}</a></li></ol></nav>
+  <main id="main-content">
+    <section class="hero group-{color} parallax">
+      <div class="hero-bg" role="img" aria-label="{name}"></div>
+      <span class="hero-tag">{tagline}</span>
       <h1>{name}</h1>
       <p class="mission">{mission}</p>
+      <a href="#offerings" class="hero-cta btn-ripple">Our Offerings <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="section">
+    <section class="section" id="offerings">
       <div class="section-header"><h2>Our Offerings</h2></div>
-      <div class="grid">{offerings_html}</div>
+      <div class="grid stagger">{offerings_html}</div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>"""
 

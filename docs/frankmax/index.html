@@ -6,21 +6,28 @@
   <title>Frankmax | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="Empowering Every Professional">
+  <meta property="og:title" content="Frankmax | Leo Global Holdings">
+  <meta property="og:description" content="Empowering Every Professional">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/frankmax/" aria-current="page">Frankmax</a></li></ol></nav>
-  <main>
-    <section class="hero group-frankmax">
+  <main id="main-content">
+    <section class="hero group-frankmax parallax">
+      <div class="hero-bg" role="img" aria-label="Frankmax"></div>
       <span class="hero-tag"></span>
       <h1>Frankmax</h1>
       <p class="mission">Empowering Every Professional</p>
+      <a href="#ventures" class="hero-cta btn-ripple">Our Ventures <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="section">
+    <section class="section" id="ventures">
       <div class="section-header"><h2>Our Ventures</h2></div>
-      <div class="grid"></div>
+      <div class="grid stagger"></div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>

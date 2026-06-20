@@ -123,8 +123,14 @@ class GraphBuilder(AgentBase):
     def _render_cross_links(self, related: list[dict]) -> str:
         if not related:
             return ''
-        items = ''.join(f'<li><a href="/{r["group"]}/{r["id"]}/">{r["name"]}</a> <span>({r["reason"]})</span></li>' for r in related)
-        return f'<section class="related"><h2>Related Ventures</h2><ul>{items}</ul></section>'
+        items = ''.join(
+            f'<a href="/{r["group"]}/{r["id"]}/" class="card fade-in">'
+            f'<h3>{r["name"]}</h3>'
+            f'<p style="font-size:0.85rem;color:var(--text-tertiary)">{r["reason"]}</p>'
+            f'</a>\n'
+            for r in related
+        )
+        return f'<section class="related"><h2>Related Ventures</h2><div class="grid stagger">{items}</div></section>'
 
 
 if __name__ == '__main__':

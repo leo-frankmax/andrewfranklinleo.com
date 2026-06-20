@@ -6,25 +6,34 @@
   <title>Leo Global Holdings | Enterprise Ecosystem</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="/styles.css">
+  <meta name="description" content="Long-term vision, capital allocation, global governance, enterprise architecture">
+  <meta property="og:title" content="Leo Global Holdings | Enterprise Ecosystem">
+  <meta property="og:description" content="Long-term vision, capital allocation, global governance, enterprise architecture">
+  <meta property="og:type" content="website">
+  <style>.hero-bg{background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=85')}</style>
 </head>
 <body>
-  <main>
-    <section class="hero">
+  <main id="main-content">
+    <section class="hero group-root parallax">
+      <div class="hero-bg" role="img" aria-label="Earth from space"></div>
       <span class="hero-tag">Enterprise Ecosystem</span>
       <h1>Leo Global Holdings</h1>
       <p class="mission">Long-term vision, capital allocation, global governance, enterprise architecture</p>
+      <a href="#ecosystem" class="hero-cta btn-ripple">Explore Our Ecosystem <span aria-hidden="true">&darr;</span></a>
+      <div class="hero-scroll" aria-hidden="true"></div>
     </section>
-    <section class="stats-bar">
+    <section class="stats-bar" id="ecosystem">
       <div class="stats-grid">
         <div class="stat-item fade-in"><div class="stat-number">10</div><div class="stat-label">Ecosystem Pillars</div></div>
-        <div class="stat-item fade-in"><div class="stat-number">0</div><div class="stat-label">Active Ventures</div></div>
-        <div class="stat-item fade-in"><div class="stat-number">0+</div><div class="stat-label">Global Offerings</div></div>
+        <div class="stat-item fade-in"><div class="stat-number">32</div><div class="stat-label">Active Ventures</div></div>
+        <div class="stat-item fade-in"><div class="stat-number">129+</div><div class="stat-label">Global Offerings</div></div>
       </div>
     </section>
     <section class="section">
       <div class="section-header"><h2>Our Ecosystem</h2><p>Four pillars of enterprise excellence, each driving transformation across its domain.</p></div>
-      <div class="ecosystem-grid"><a href="/frankmax/" class="ecosystem-card frankmax fade-in">
+      <div class="ecosystem-grid stagger"><a href="/frankmax/" class="ecosystem-card frankmax fade-in">
           <div class="card-label"></div>
           <h3>Frankmax</h3>
           <p class="mission">Empowering Every Professional</p>
@@ -51,6 +60,6 @@
 </div>
     </section>
   </main>
-  <script src="/components.js"></script>
+  <script src="/components.js" defer></script>
 </body>
 </html>
