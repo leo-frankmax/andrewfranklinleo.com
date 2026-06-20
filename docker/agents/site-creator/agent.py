@@ -227,3 +227,18 @@ class SiteCreator(AgentBase):
   </main>
 </body>
 </html>"""
+
+
+if __name__ == '__main__':
+    data_root = '/data'
+    ventures_path = Path(data_root) / 'ventures.json'
+
+    if not ventures_path.exists():
+        print(f'ERROR: {ventures_path} not found', file=sys.stderr)
+        sys.exit(1)
+
+    ventures_data = json.loads(ventures_path.read_text())
+    agent = SiteCreator(data_root)
+    result = agent.run(ventures_data)
+    print(json.dumps(result, indent=2))
+    sys.exit(0 if result.get('success') else 1)

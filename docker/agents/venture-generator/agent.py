@@ -115,3 +115,23 @@ class VentureGenerator(AgentBase):
                 errors.append(f"Venture '{venture.get('id')}' missing parentId")
 
         return {'valid': len(errors) == 0, 'errors': errors}
+
+
+if __name__ == '__main__':
+    data_root = '/data'
+    ventures_path = Path(data_root) / 'ventures.json'
+
+    if not ventures_path.exists():
+        print(f'ERROR: {ventures_path} not found', file=sys.stderr)
+        sys.exit(1)
+
+    ventures_data = json.loads(ventures_path.read_text())
+    agent = VentureGenerator(data_root)
+    result = agent.run(ventures_data)
+
+    if result.get('success') and 'ventures_data' in result:
+        ventures_path.write_text(json.dumps(result['ventures_data'], indent=2))
+
+    output = {k: v for k, v in result.items() if k != 'ventures_data'}
+    print(json.dumps(output, indent=2))
+    sys.exit(0 if result.get('success') else 1)
