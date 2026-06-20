@@ -157,7 +157,8 @@ jobs:
           git config user.name "afl-bot"
           git config user.email "bot@andrewfranklinleo.com"
           git add docs/ ventures.json
-          if (!git diff --cached --quiet) {
+          $changes = git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
             git commit -m "auto: regenerate enterprise sites [skip ci]"
             git push
           } else {
