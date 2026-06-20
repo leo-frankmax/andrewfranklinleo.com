@@ -40,7 +40,10 @@ def check_site(sites_root):
         rel = f.relative_to(sites_root)
         all_pages[str(rel)] = f
         report['html_files'] += 1
-        content = f.read_text(encoding='utf-8')
+        try:
+            content = f.read_text(encoding='utf-8')
+        except UnicodeDecodeError:
+            content = f.read_text(encoding='latin-1')
 
         if len(content.strip()) == 0:
             report['empty_files'] += 1
@@ -50,10 +53,12 @@ def check_site(sites_root):
         if '<title>' not in content:
             report['missing_title'] += 1
 
-        if 'nav' not in content.lower() and 'navigation' not in content.lower():
+        has_js_components = 'components.js' in content
+
+        if 'nav' not in content.lower() and 'navigation' not in content.lower() and not has_js_components:
             report['missing_nav'] += 1
 
-        if 'footer' not in content.lower():
+        if 'footer' not in content.lower() and not has_js_components:
             report['missing_footer'] += 1
 
     for f in sites_root.rglob('_*.json'):

@@ -102,10 +102,11 @@ class GraphBuilder(AgentBase):
         for v in data.get('ventures', []):
             if v.get('id') == venture.get('id'):
                 continue
-            if v.get('parentId') == group_id:
-                related.append({'id': v.get('id'), 'name': v.get('name', ''), 'reason': 'same-group'})
+            v_group = v.get('parentId', '')
+            if v_group == group_id:
+                related.append({'id': v.get('id'), 'name': v.get('name', ''), 'group': v_group, 'reason': 'same-group'})
             elif len(related) < 3:
-                related.append({'id': v.get('id'), 'name': v.get('name', ''), 'reason': 'cross-group'})
+                related.append({'id': v.get('id'), 'name': v.get('name', ''), 'group': v_group, 'reason': 'cross-group'})
         return related[:5]
 
     def _get_ecosystem_flows(self, venture_id: str, data: dict) -> dict:
@@ -122,7 +123,7 @@ class GraphBuilder(AgentBase):
     def _render_cross_links(self, related: list[dict]) -> str:
         if not related:
             return ''
-        items = ''.join(f'<li><a href="/{r["id"]}/">{r["name"]}</a> <span>({r["reason"]})</span></li>' for r in related)
+        items = ''.join(f'<li><a href="/{r["group"]}/{r["id"]}/">{r["name"]}</a> <span>({r["reason"]})</span></li>' for r in related)
         return f'<section class="related"><h2>Related Ventures</h2><ul>{items}</ul></section>'
 
 

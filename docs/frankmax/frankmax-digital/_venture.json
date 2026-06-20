@@ -8,26 +8,31 @@
     {
       "id": "frankmax-talent",
       "name": "Frankmax Talent",
+      "group": "frankmax",
       "reason": "same-group"
     },
     {
       "id": "frankmax-learning",
       "name": "Frankmax Learning",
+      "group": "frankmax",
       "reason": "same-group"
     },
     {
       "id": "frankmax-consulting",
       "name": "Frankmax Consulting",
+      "group": "frankmax",
       "reason": "same-group"
     },
     {
       "id": "frankmax-leadership",
       "name": "Frankmax Leadership",
+      "group": "frankmax",
       "reason": "same-group"
     },
     {
       "id": "frankmax-research",
       "name": "Frankmax Research",
+      "group": "frankmax",
       "reason": "same-group"
     }
   ],

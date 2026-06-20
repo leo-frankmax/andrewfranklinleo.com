@@ -8,26 +8,31 @@
     {
       "id": "frankmax-talent",
       "name": "Frankmax Talent",
+      "group": "frankmax",
       "reason": "cross-group"
     },
     {
       "id": "frankmax-learning",
       "name": "Frankmax Learning",
+      "group": "frankmax",
       "reason": "cross-group"
     },
     {
       "id": "frankmax-consulting",
       "name": "Frankmax Consulting",
+      "group": "frankmax",
       "reason": "cross-group"
     },
     {
       "id": "crenza-investments",
       "name": "Crenza Investments",
+      "group": "crenza",
       "reason": "same-group"
     },
     {
       "id": "crenza-real-assets",
       "name": "Crenza Real Assets",
+      "group": "crenza",
       "reason": "same-group"
     }
   ],

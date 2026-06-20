@@ -74,6 +74,10 @@ class ContentWriter(AgentBase):
     def _generate_offering_content(self, offering: dict, venture: dict) -> str:
         name = offering.get('name', '')
         venture_name = venture.get('name', '')
+        gid = venture.get('parentId', '')
+        vid = venture.get('id', '')
+        oid = offering.get('id', '')
+        color = gid.split('-')[0] if gid else ''
         return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,36 +85,44 @@ class ContentWriter(AgentBase):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{name} | {venture_name} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{venture.get('parentId', '')}/">{venture.get('parentId', '')}</a></li><li><a href="/{venture.get('parentId', '')}/{venture.get('id', '')}/">{venture_name}</a></li><li><a href="/{venture.get('parentId', '')}/{venture.get('id', '')}/{offering.get('id', '')}/" aria-current="page">{name}</a></li></ol></nav>
+  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{gid}/">{gid.replace('-', ' ').title()}</a></li><li><a href="/{gid}/{vid}/">{venture_name}</a></li><li><a href="/{gid}/{vid}/{oid}/" aria-current="page">{name}</a></li></ol></nav>
   <main>
-    <header class="hero">
+    <section class="hero group-{color}">
+      <span class="hero-tag">{venture_name}</span>
       <h1>{name}</h1>
-      <p class="description">Part of {venture_name}</p>
-    </header>
-    <section class="content">
+      <p class="mission">Part of {venture_name} — delivering exceptional value to stakeholders.</p>
+    </section>
+    <section class="content-section">
       <h2>About {name}</h2>
-      <p>{name} is a core offering within {venture_name}, designed to deliver exceptional value to our stakeholders.</p>
+      <p>{name} is a core offering within {venture_name}, designed to deliver exceptional value to our stakeholders through professional excellence and proven methodologies.</p>
       <h2>Key Benefits</h2>
       <ul>
-        <li>Professional excellence</li>
-        <li>Proven methodologies</li>
-        <li>Measurable outcomes</li>
+        <li>Professional excellence and industry expertise</li>
+        <li>Proven methodologies with measurable outcomes</li>
+        <li>Integrated solutions across the value chain</li>
       </ul>
       <h2>Use Cases</h2>
-      <p>Organizations across industries leverage {name} to achieve their strategic objectives.</p>
+      <p>Organizations across industries leverage {name} to achieve their strategic objectives and drive transformational growth.</p>
     </section>
   </main>
+  <script src="/components.js"></script>
 </body>
 </html>"""
 
     def _generate_venture_content(self, venture: dict, group_id: str) -> str:
         name = venture.get('name', '')
         mission = venture.get('mission', '')
+        vid = venture.get('id', '')
+        color = group_id.split('-')[0] if group_id else ''
         offerings_html = ''
         for o in venture.get('offerings', []):
-            offerings_html += f'<article class="card"><h3><a href="/{group_id}/{venture.get("id", "")}/{o.get("id", "")}/">{o.get("name", "")}</a></h3></article>\n'
+            oid = o.get('id', '')
+            oname = o.get('name', '')
+            offerings_html += f'<a href="/{group_id}/{vid}/{oid}/" class="card fade-in"><h3>{oname}</h3></a>\n'
 
         return f"""<!DOCTYPE html>
 <html lang="en">
@@ -119,16 +131,23 @@ class ContentWriter(AgentBase):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{name} | Leo Global Holdings</title>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{group_id}/">{group_id}</a></li><li><a href="/{group_id}/{venture.get('id', '')}/" aria-current="page">{name}</a></li></ol></nav>
+  <nav aria-label="Breadcrumb" class="breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/{group_id}/">{group_id.replace('-', ' ').title()}</a></li><li><a href="/{group_id}/{vid}/" aria-current="page">{name}</a></li></ol></nav>
   <main>
-    <header class="hero">
+    <section class="hero group-{color}">
+      <span class="hero-tag">{mission.split('—')[0].strip() if '—' in mission else ''}</span>
       <h1>{name}</h1>
       <p class="mission">{mission}</p>
-    </header>
-    <section><h2>Our Offerings</h2><div class="grid">{offerings_html}</div></section>
+    </section>
+    <section class="section">
+      <div class="section-header"><h2>Our Offerings</h2></div>
+      <div class="grid">{offerings_html}</div>
+    </section>
   </main>
+  <script src="/components.js"></script>
 </body>
 </html>"""
 
