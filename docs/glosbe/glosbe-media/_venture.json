@@ -1,0 +1,38 @@
+{
+  "id": "glosbe-media",
+  "name": "Glosbe Media",
+  "type": "venture",
+  "mission": "Knowledge dissemination",
+  "parentId": "glosbe",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    },
+    {
+      "id": "glosbe-communities",
+      "name": "Glosbe Communities",
+      "reason": "same-group"
+    },
+    {
+      "id": "glosbe-collaboration",
+      "name": "Glosbe Collaboration",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "leo-capital-ventures",
+  "name": "Leo Capital Ventures",
+  "type": "venture",
+  "mission": "Finance transformation",
+  "parentId": "leo-capital",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

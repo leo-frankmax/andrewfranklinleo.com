@@ -1,0 +1,6 @@
+{
+  "id": "managed-services",
+  "name": "Managed Services",
+  "type": "offering",
+  "parentId": "virginbay-services"
+}

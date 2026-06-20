@@ -1,0 +1,38 @@
+{
+  "id": "glosbe-collaboration",
+  "name": "Glosbe Collaboration",
+  "type": "venture",
+  "mission": "Collective intelligence",
+  "parentId": "glosbe",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    },
+    {
+      "id": "glosbe-communities",
+      "name": "Glosbe Communities",
+      "reason": "same-group"
+    },
+    {
+      "id": "glosbe-civic-networks",
+      "name": "Glosbe Civic Networks",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

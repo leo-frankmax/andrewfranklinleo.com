@@ -1,0 +1,6 @@
+{
+  "id": "payments",
+  "name": "Payments",
+  "type": "offering",
+  "parentId": "virginbay-financial-services"
+}

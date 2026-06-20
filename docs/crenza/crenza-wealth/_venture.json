@@ -1,0 +1,38 @@
+{
+  "id": "crenza-wealth",
+  "name": "Crenza Wealth",
+  "type": "venture",
+  "mission": "Financial security",
+  "parentId": "crenza",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    },
+    {
+      "id": "crenza-investments",
+      "name": "Crenza Investments",
+      "reason": "same-group"
+    },
+    {
+      "id": "crenza-real-assets",
+      "name": "Crenza Real Assets",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

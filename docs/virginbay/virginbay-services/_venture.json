@@ -1,0 +1,38 @@
+{
+  "id": "virginbay-services",
+  "name": "Virginbay Services",
+  "type": "venture",
+  "mission": "Service-based value creation",
+  "parentId": "virginbay",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    },
+    {
+      "id": "virginbay-marketplace",
+      "name": "Virginbay Marketplace",
+      "reason": "same-group"
+    },
+    {
+      "id": "virginbay-logistics",
+      "name": "Virginbay Logistics",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

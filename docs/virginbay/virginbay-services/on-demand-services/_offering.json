@@ -1,0 +1,6 @@
+{
+  "id": "on-demand-services",
+  "name": "On-Demand Services",
+  "type": "offering",
+  "parentId": "virginbay-services"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "frankmax-learning",
+  "name": "Frankmax Learning",
+  "type": "venture",
+  "mission": "Continuous capability enhancement",
+  "parentId": "frankmax",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-digital",
+      "name": "Frankmax Digital",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-leadership",
+      "name": "Frankmax Leadership",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-research",
+      "name": "Frankmax Research",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

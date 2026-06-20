@@ -1,0 +1,28 @@
+{
+  "id": "leo-technologies-ventures",
+  "name": "Leo Technologies Ventures",
+  "type": "venture",
+  "mission": "Technological backbone",
+  "parentId": "leo-technologies",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

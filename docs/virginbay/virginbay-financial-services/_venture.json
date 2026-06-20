@@ -1,0 +1,38 @@
+{
+  "id": "virginbay-financial-services",
+  "name": "Virginbay Financial Services",
+  "type": "venture",
+  "mission": "Economic liquidity",
+  "parentId": "virginbay",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    },
+    {
+      "id": "virginbay-marketplace",
+      "name": "Virginbay Marketplace",
+      "reason": "same-group"
+    },
+    {
+      "id": "virginbay-services",
+      "name": "Virginbay Services",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

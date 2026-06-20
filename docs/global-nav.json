@@ -1,0 +1,148 @@
+{
+  "home": {
+    "label": "Home",
+    "url": "/"
+  },
+  "groups": [
+    {
+      "label": "Frankmax",
+      "url": "/frankmax/",
+      "mission": "Empowering Every Professional",
+      "ventures": [
+        {
+          "label": "Frankmax Talent",
+          "url": "/frankmax/frankmax-talent/"
+        },
+        {
+          "label": "Frankmax Learning",
+          "url": "/frankmax/frankmax-learning/"
+        },
+        {
+          "label": "Frankmax Consulting",
+          "url": "/frankmax/frankmax-consulting/"
+        },
+        {
+          "label": "Frankmax Digital",
+          "url": "/frankmax/frankmax-digital/"
+        },
+        {
+          "label": "Frankmax Leadership",
+          "url": "/frankmax/frankmax-leadership/"
+        },
+        {
+          "label": "Frankmax Research",
+          "url": "/frankmax/frankmax-research/"
+        },
+        {
+          "label": "Frankmax Workforce Solutions",
+          "url": "/frankmax/frankmax-workforce-solutions/"
+        }
+      ]
+    },
+    {
+      "label": "Virginbay",
+      "url": "/virginbay/",
+      "mission": "Powering Global Commerce",
+      "ventures": [
+        {
+          "label": "Virginbay Marketplace",
+          "url": "/virginbay/virginbay-marketplace/"
+        },
+        {
+          "label": "Virginbay Services",
+          "url": "/virginbay/virginbay-services/"
+        },
+        {
+          "label": "Virginbay Logistics",
+          "url": "/virginbay/virginbay-logistics/"
+        },
+        {
+          "label": "Virginbay Financial Services",
+          "url": "/virginbay/virginbay-financial-services/"
+        },
+        {
+          "label": "Virginbay Ventures",
+          "url": "/virginbay/virginbay-ventures/"
+        },
+        {
+          "label": "Virginbay Global Trade",
+          "url": "/virginbay/virginbay-global-trade/"
+        },
+        {
+          "label": "Virginbay Innovation Markets",
+          "url": "/virginbay/virginbay-innovation-markets/"
+        }
+      ]
+    },
+    {
+      "label": "Glosbe",
+      "url": "/glosbe/",
+      "mission": "Connecting Every Community",
+      "ventures": [
+        {
+          "label": "Glosbe Communities",
+          "url": "/glosbe/glosbe-communities/"
+        },
+        {
+          "label": "Glosbe Collaboration",
+          "url": "/glosbe/glosbe-collaboration/"
+        },
+        {
+          "label": "Glosbe Civic Networks",
+          "url": "/glosbe/glosbe-civic-networks/"
+        },
+        {
+          "label": "Glosbe Media",
+          "url": "/glosbe/glosbe-media/"
+        },
+        {
+          "label": "Glosbe Social Impact",
+          "url": "/glosbe/glosbe-social-impact/"
+        },
+        {
+          "label": "Glosbe Knowledge Networks",
+          "url": "/glosbe/glosbe-knowledge-networks/"
+        },
+        {
+          "label": "Glosbe Community Development",
+          "url": "/glosbe/glosbe-community-development/"
+        }
+      ]
+    },
+    {
+      "label": "Crenza",
+      "url": "/crenza/",
+      "mission": "Stewarding Every Asset",
+      "ventures": [
+        {
+          "label": "Crenza Wealth",
+          "url": "/crenza/crenza-wealth/"
+        },
+        {
+          "label": "Crenza Investments",
+          "url": "/crenza/crenza-investments/"
+        },
+        {
+          "label": "Crenza Real Assets",
+          "url": "/crenza/crenza-real-assets/"
+        },
+        {
+          "label": "Crenza Intellectual Capital",
+          "url": "/crenza/crenza-intellectual-capital/"
+        },
+        {
+          "label": "Crenza Trust Services",
+          "url": "/crenza/crenza-trust-services/"
+        },
+        {
+          "label": "Crenza Infrastructure",
+          "url": "/crenza/crenza-infrastructure/"
+        },
+        {
+          "label": "Crenza Strategic Holdings",
+          "url": "/crenza/crenza-strategic-holdings/"
+        }
+      ]
+    }
+  ]
+}

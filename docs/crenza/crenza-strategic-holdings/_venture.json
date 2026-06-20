@@ -1,0 +1,38 @@
+{
+  "id": "crenza-strategic-holdings",
+  "name": "Crenza Strategic Holdings",
+  "type": "venture",
+  "mission": "Portfolio management",
+  "parentId": "crenza",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "cross-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "cross-group"
+    },
+    {
+      "id": "crenza-wealth",
+      "name": "Crenza Wealth",
+      "reason": "same-group"
+    },
+    {
+      "id": "crenza-investments",
+      "name": "Crenza Investments",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}

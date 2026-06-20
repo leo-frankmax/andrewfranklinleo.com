@@ -1,0 +1,38 @@
+{
+  "id": "frankmax-digital",
+  "name": "Frankmax Digital",
+  "type": "venture",
+  "mission": "Technology-enabled productivity",
+  "parentId": "frankmax",
+  "related": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-leadership",
+      "name": "Frankmax Leadership",
+      "reason": "same-group"
+    },
+    {
+      "id": "frankmax-research",
+      "name": "Frankmax Research",
+      "reason": "same-group"
+    }
+  ],
+  "ecosystem_flows": {
+    "upstream": [],
+    "downstream": []
+  }
+}
