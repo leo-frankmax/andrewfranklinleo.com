@@ -28,8 +28,8 @@ services:
 
   template-mcp:
     build:
-      context: .
-      dockerfile: mcp-servers/template-mcp/Dockerfile
+      context: ..
+      dockerfile: docker/mcp-servers/template-mcp/Dockerfile
     container_name: template-mcp
     ports:
       - "3003:3003"
