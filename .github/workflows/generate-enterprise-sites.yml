@@ -37,8 +37,6 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
-  PYTHON_VERSION: '3.12'
-  DOCKER_COMPOSE_FILE: 'docker/compose.yml'
 
 jobs:
   test:
@@ -58,14 +56,6 @@ jobs:
 
       - name: Run TypeScript tests
         run: npx vitest run
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install pytest
-        run: pip install pytest
 
       - name: Run MCP server tests
         run: |
@@ -89,10 +79,11 @@ jobs:
             Pop-Location
           }
 
-  parse:
-    name: Parse Conversation
+  generate:
+    name: Generate Sites
     runs-on: self-hosted
-    timeout-minutes: 10
+    timeout-minutes: 60
+    needs: test
     steps:
       - uses: actions/checkout@v4
 
@@ -101,54 +92,22 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install dependencies
+      - name: Install npm dependencies
         run: npm ci
-
-      - name: Validate ventures.json structure
-        run: npx tsx src/scripts/validate-structure.ts
-
-      - name: Upload ventures.json
-        uses: actions/upload-artifact@v4
-        with:
-          name: ventures
-          path: ventures.json
-          retention-days: 1
-
-  generate:
-    name: Generate Sites
-    runs-on: self-hosted
-    timeout-minutes: 60
-    needs: [test, parse]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download ventures.json
-        uses: actions/download-artifact@v4
-        with:
-          name: ventures
 
       - name: Setup Docker
         uses: docker/setup-buildx-action@v3
 
       - name: Build MCP server images
-        run: docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} build
+        run: docker compose -f docker/compose.yml build
 
       - name: Start MCP servers
-        run: docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d fs-mcp content-mcp template-mcp graph-mcp registry-mcp
+        run: docker compose -f docker/compose.yml up -d fs-mcp content-mcp template-mcp graph-mcp registry-mcp
 
       - name: Wait for MCP servers
         run: |
           Write-Host "Waiting for MCP servers to start..."
           Start-Sleep -Seconds 10
-          $ports = @(3001, 3002, 3003, 3004, 3005)
-          foreach ($port in $ports) {
-            try {
-              $response = Invoke-WebRequest -Uri "http://localhost:$port/health" -TimeoutSec 5 -ErrorAction Stop
-              Write-Host "  Port $port: OK"
-            } catch {
-              Write-Host "  Port $port: Not responding (continuing anyway)"
-            }
-          }
 
       - name: Run venture-generator agent
         run: |
@@ -193,19 +152,24 @@ jobs:
 
       - name: Stop MCP servers
         if: always()
-        run: docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} down
+        run: docker compose -f docker/compose.yml down
 
       - name: Copy sites to docs for GitHub Pages
         run: |
           if (Test-Path docs) { Remove-Item -Recurse -Force docs }
           Copy-Item -Recurse sites/leo-global-holdings docs
 
-      - name: Upload built site
-        uses: actions/upload-artifact@v4
-        with:
-          name: built-site
-          path: docs/
-          retention-days: 7
+      - name: Commit and push generated content
+        run: |
+          git config user.name "afl-bot"
+          git config user.email "bot@andrewfranklinleo.com"
+          git add docs/ ventures.json
+          if (!git diff --cached --quiet) {
+            git commit -m "auto: regenerate enterprise sites [skip ci]"
+            git push
+          } else {
+            Write-Host "No changes to commit"
+          }
 
   deploy:
     name: Deploy to GitHub Pages
@@ -222,12 +186,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Download built site
-        uses: actions/download-artifact@v4
         with:
-          name: built-site
-          path: docs/
+          ref: master
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -240,28 +200,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-  commit-generated:
-    name: Commit Generated Content
-    runs-on: self-hosted
-    timeout-minutes: 10
-    needs: deploy
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Configure git
-        run: |
-          git config user.name "afl-bot"
-          git config user.email "bot@andrewfranklinleo.com"
-
-      - name: Commit and push
-        run: |
-          git add docs/
-          if (!git diff --cached --quiet) {
-            git commit -m "auto: regenerate enterprise sites [skip ci]"
-            git push
-          } else {
-            Write-Host "No changes to commit"
-          }
