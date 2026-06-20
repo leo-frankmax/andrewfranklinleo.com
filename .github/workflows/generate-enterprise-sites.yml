@@ -115,22 +115,22 @@ jobs:
 
       - name: Run venture-generator agent
         run: |
-          docker compose -f docker/compose.yml run --rm `
+          docker compose -f docker/compose.yml run --rm --no-deps `
             -e TARGET_GROUP="${{ inputs.target_group || 'all' }}" `
             -e FORCE_REGEN="${{ inputs.force_full_regen || 'false' }}" `
             venture-generator
 
       - name: Run site-creator agent
-        run: docker compose -f docker/compose.yml run --rm site-creator
+        run: docker compose -f docker/compose.yml run --rm --no-deps site-creator
 
       - name: Run content-writer agent
-        run: docker compose -f docker/compose.yml run --rm content-writer
+        run: docker compose -f docker/compose.yml run --rm --no-deps content-writer
 
       - name: Run graph-builder agent
-        run: docker compose -f docker/compose.yml run --rm graph-builder
+        run: docker compose -f docker/compose.yml run --rm --no-deps graph-builder
 
       - name: Run qa-validator agent
-        run: docker compose -f docker/compose.yml run --rm qa-validator
+        run: docker compose -f docker/compose.yml run --rm --no-deps qa-validator
 
       - name: Validate generated structure
         run: npx tsx src/scripts/validate-structure.ts
