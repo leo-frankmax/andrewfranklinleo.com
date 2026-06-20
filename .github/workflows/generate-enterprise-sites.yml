@@ -113,35 +113,22 @@ jobs:
 
       - name: Run venture-generator agent
         run: |
-          docker run --rm --network host `
-            -v "${{ github.workspace }}:/data" `
+          docker compose -f docker/compose.yml run --rm `
             -e TARGET_GROUP="${{ inputs.target_group || 'all' }}" `
             -e FORCE_REGEN="${{ inputs.force_full_regen || 'false' }}" `
-            agents/venture-generator
+            venture-generator
 
       - name: Run site-creator agent
-        run: |
-          docker run --rm --network host `
-            -v "${{ github.workspace }}:/data" `
-            agents/site-creator
+        run: docker compose -f docker/compose.yml run --rm site-creator
 
       - name: Run content-writer agent
-        run: |
-          docker run --rm --network host `
-            -v "${{ github.workspace }}:/data" `
-            agents/content-writer
+        run: docker compose -f docker/compose.yml run --rm content-writer
 
       - name: Run graph-builder agent
-        run: |
-          docker run --rm --network host `
-            -v "${{ github.workspace }}:/data" `
-            agents/graph-builder
+        run: docker compose -f docker/compose.yml run --rm graph-builder
 
       - name: Run qa-validator agent
-        run: |
-          docker run --rm --network host `
-            -v "${{ github.workspace }}:/data" `
-            agents/qa-validator
+        run: docker compose -f docker/compose.yml run --rm qa-validator
 
       - name: Validate generated structure
         run: npx tsx src/scripts/validate-structure.ts
