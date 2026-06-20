@@ -1,0 +1,9 @@
+node_modules/
+dist/
+docs/
+*.error.json
+.trash/
+build/
+coverage/
+.env
+.env.*

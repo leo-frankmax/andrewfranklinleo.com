@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{offeringName}} | {{ventureName}} | Leo Global Holdings</title>
+  <meta name="description" content="{{offeringDescription}}">
+  <meta property="og:title" content="{{offeringName}}">
+  <meta property="og:description" content="{{offeringDescription}}">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  {{nav}}
+  {{breadcrumbs}}
+
+  <main class="offering-page">
+    <header class="hero">
+      <h1>{{offeringName}}</h1>
+      <p class="description">{{offeringDescription}}</p>
+    </header>
+
+    <section class="functions-section">
+      <h2>What We Do</h2>
+      <div class="content">
+        {{functions}}
+      </div>
+    </section>
+
+    <section class="benefits-section">
+      <h2>Benefits</h2>
+      <div class="content">
+        {{benefits}}
+      </div>
+    </section>
+
+    <section class="use-cases-section">
+      <h2>Use Cases</h2>
+      <div class="content">
+        {{useCases}}
+      </div>
+    </section>
+
+    <section class="related-section">
+      <h2>Related Offerings</h2>
+      <div class="grid">
+        {{relatedGrid}}
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Get Started</h2>
+      <p>{{ctaText}}</p>
+      <a href="{{ctaUrl}}" class="cta-button">{{ctaLabel}}</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Leo Global Holdings. All rights reserved.</p>
+  </footer>
+</body>
+</html>

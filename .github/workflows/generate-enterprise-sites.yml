@@ -1,0 +1,267 @@
+name: Generate Enterprise Sites
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_full_regen:
+        description: 'Force full regeneration (ignore cache)'
+        type: boolean
+        default: false
+      target_group:
+        description: 'Target specific group (leave empty for all)'
+        type: choice
+        options:
+          - ''
+          - frankmax
+          - virginbay
+          - glosbe
+          - crenza
+          - all
+        default: ''
+
+  schedule:
+    - cron: '0 6 * * *'
+
+  push:
+    paths:
+      - 'memory/chatgpt-conversation-andrew-franklin-leo.md'
+      - 'src/scripts/**'
+      - 'templates/**'
+      - 'docker/**'
+    branches:
+      - main
+
+concurrency:
+  group: pipeline-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '20'
+  PYTHON_VERSION: '3.12'
+  DOCKER_COMPOSE_FILE: 'docker/compose.yml'
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: self-hosted
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run TypeScript tests
+        run: npx vitest run
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run MCP server tests
+        run: |
+          $env:PYTHONPATH = Join-Path $env:GITHUB_WORKSPACE 'docker'
+          $servers = @('fs-mcp', 'content-mcp', 'template-mcp', 'graph-mcp', 'registry-mcp')
+          foreach ($server in $servers) {
+            Write-Host "Testing $server..."
+            Push-Location "docker/mcp-servers/$server"
+            python -m pytest tests/ -v --tb=short
+            Pop-Location
+          }
+
+      - name: Run agent tests
+        run: |
+          $env:PYTHONPATH = Join-Path $env:GITHUB_WORKSPACE 'docker'
+          $agents = @('venture-generator', 'site-creator', 'content-writer', 'graph-builder', 'qa-validator')
+          foreach ($agent in $agents) {
+            Write-Host "Testing $agent..."
+            Push-Location "docker/agents/$agent"
+            python -m pytest tests/ -v --tb=short
+            Pop-Location
+          }
+
+  parse:
+    name: Parse Conversation
+    runs-on: self-hosted
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate ventures.json structure
+        run: npx tsx src/scripts/validate-structure.ts
+
+      - name: Upload ventures.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: ventures
+          path: ventures.json
+          retention-days: 1
+
+  generate:
+    name: Generate Sites
+    runs-on: self-hosted
+    timeout-minutes: 60
+    needs: [test, parse]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download ventures.json
+        uses: actions/download-artifact@v4
+        with:
+          name: ventures
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build MCP server images
+        run: docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} build
+
+      - name: Start MCP servers
+        run: docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d fs-mcp content-mcp template-mcp graph-mcp registry-mcp
+
+      - name: Wait for MCP servers
+        run: |
+          Write-Host "Waiting for MCP servers to start..."
+          Start-Sleep -Seconds 10
+          $ports = @(3001, 3002, 3003, 3004, 3005)
+          foreach ($port in $ports) {
+            try {
+              $response = Invoke-WebRequest -Uri "http://localhost:$port/health" -TimeoutSec 5 -ErrorAction Stop
+              Write-Host "  Port $port: OK"
+            } catch {
+              Write-Host "  Port $port: Not responding (continuing anyway)"
+            }
+          }
+
+      - name: Run venture-generator agent
+        run: |
+          docker run --rm --network host `
+            -v "${{ github.workspace }}:/data" `
+            -e TARGET_GROUP="${{ inputs.target_group || 'all' }}" `
+            -e FORCE_REGEN="${{ inputs.force_full_regen || 'false' }}" `
+            agents/venture-generator
+
+      - name: Run site-creator agent
+        run: |
+          docker run --rm --network host `
+            -v "${{ github.workspace }}:/data" `
+            agents/site-creator
+
+      - name: Run content-writer agent
+        run: |
+          docker run --rm --network host `
+            -v "${{ github.workspace }}:/data" `
+            agents/content-writer
+
+      - name: Run graph-builder agent
+        run: |
+          docker run --rm --network host `
+            -v "${{ github.workspace }}:/data" `
+            agents/graph-builder
+
+      - name: Run qa-validator agent
+        run: |
+          docker run --rm --network host `
+            -v "${{ github.workspace }}:/data" `
+            agents/qa-validator
+
+      - name: Validate generated structure
+        run: npx tsx src/scripts/validate-structure.ts
+
+      - name: Run health check
+        run: python src/scripts/health-check.py sites/leo-global-holdings
+
+      - name: Run drift detection
+        run: python src/scripts/drift-detection.py .
+
+      - name: Stop MCP servers
+        if: always()
+        run: docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} down
+
+      - name: Copy sites to docs for GitHub Pages
+        run: |
+          if (Test-Path docs) { Remove-Item -Recurse -Force docs }
+          Copy-Item -Recurse sites/leo-global-holdings docs
+
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-site
+          path: docs/
+          retention-days: 7
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: self-hosted
+    timeout-minutes: 10
+    needs: generate
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: built-site
+          path: docs/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  commit-generated:
+    name: Commit Generated Content
+    runs-on: self-hosted
+    timeout-minutes: 10
+    needs: deploy
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "afl-bot"
+          git config user.email "bot@andrewfranklinleo.com"
+
+      - name: Commit and push
+        run: |
+          git add docs/
+          if (!git diff --cached --quiet) {
+            git commit -m "auto: regenerate enterprise sites [skip ci]"
+            git push
+          } else {
+            Write-Host "No changes to commit"
+          }

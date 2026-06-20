@@ -1,0 +1,24 @@
+<nav aria-label="Global Navigation" class="global-nav">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">Leo Global Holdings</a>
+    <ul class="nav-links">
+      <li><a href="/" {{#if isHome}}aria-current="page"{{/if}}>Home</a></li>
+      {{#each groups}}
+      <li class="nav-dropdown">
+        <a href="/{{this.slug}}/" {{#if this.active}}aria-current="page"{{/if}}>{{this.name}}</a>
+        {{#if this.ventures.length}}
+        <ul class="dropdown-menu">
+          {{#each this.ventures}}
+          <li><a href="/{{../slug}}/{{this.slug}}/">{{this.name}}</a></li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </li>
+      {{/each}}
+      <li class="nav-divider" aria-hidden="true"></li>
+      {{#each strategicVerticals}}
+      <li><a href="/{{this.slug}}/" {{#if this.active}}aria-current="page"{{/if}}>{{this.name}}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+</nav>

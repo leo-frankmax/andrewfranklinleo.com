@@ -1,0 +1,30 @@
+{
+  "name": "andrewfranklinleo-cms",
+  "version": "0.1.0",
+  "description": "Self-generating AI-driven HTML CMS for Andrew Franklin Leo business empire",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "build": "tsc",
+    "parse": "node --loader ts-node/esm scripts/parse-conversation.ts",
+    "validate": "node --loader ts-node/esm scripts/validate-structure.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "ts-node": "^10.9.0"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^14.0.0",
+    "sanitize-html": "^2.13.0",
+    "json-stable-stringify": "^1.0.2",
+    "crypto-js": "^4.2.0"
+  }
+}

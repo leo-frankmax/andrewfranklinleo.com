@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{groupName}} | Leo Global Holdings</title>
+  <meta name="description" content="{{groupMission}}">
+  <meta property="og:title" content="{{groupName}}">
+  <meta property="og:description" content="{{groupMission}}">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  {{nav}}
+  {{breadcrumbs}}
+
+  <main class="group-landing">
+    <header class="hero">
+      <h1>{{groupName}}</h1>
+      <p class="mission">{{groupMission}}</p>
+    </header>
+
+    <section class="ventures-section">
+      <h2>Our Ventures</h2>
+      <p class="section-intro">{{venturesDescription}}</p>
+      <div class="grid">
+        {{venturesGrid}}
+      </div>
+    </section>
+
+    <section class="stakeholders-section">
+      <h2>Stakeholders</h2>
+      <div class="stakeholders-list">
+        {{stakeholdersList}}
+      </div>
+    </section>
+
+    <section class="ecosystem-role-section">
+      <h2>Role in the Ecosystem</h2>
+      <p>{{ecosystemRole}}</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Leo Global Holdings. All rights reserved.</p>
+  </footer>
+</body>
+</html>

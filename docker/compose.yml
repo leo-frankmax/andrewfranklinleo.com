@@ -1,0 +1,127 @@
+services:
+  fs-mcp:
+    build:
+      context: .
+      dockerfile: mcp-servers/fs-mcp/Dockerfile
+    container_name: fs-mcp
+    ports:
+      - "3001:3001"
+    volumes:
+      - ../sites:/data/sites
+      - ../docs:/data/docs
+      - ../ventures.json:/data/ventures.json
+    environment:
+      - ROOT_PATH=/data
+    restart: unless-stopped
+
+  content-mcp:
+    build:
+      context: .
+      dockerfile: mcp-servers/content-mcp/Dockerfile
+    container_name: content-mcp
+    ports:
+      - "3002:3002"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MODEL=gpt-4.1
+    restart: unless-stopped
+
+  template-mcp:
+    build:
+      context: .
+      dockerfile: mcp-servers/template-mcp/Dockerfile
+    container_name: template-mcp
+    ports:
+      - "3003:3003"
+    volumes:
+      - ../templates:/app/templates
+    restart: unless-stopped
+
+  graph-mcp:
+    build:
+      context: .
+      dockerfile: mcp-servers/graph-mcp/Dockerfile
+    container_name: graph-mcp
+    ports:
+      - "3004:3004"
+    volumes:
+      - ../ventures.json:/data/ventures.json
+    restart: unless-stopped
+
+  registry-mcp:
+    build:
+      context: .
+      dockerfile: mcp-servers/registry-mcp/Dockerfile
+    container_name: registry-mcp
+    ports:
+      - "3005:3005"
+    volumes:
+      - registry-data:/data
+    restart: unless-stopped
+
+  venture-generator:
+    build:
+      context: .
+      dockerfile: agents/venture-generator/Dockerfile
+    container_name: venture-generator
+    volumes:
+      - ../ventures.json:/data/ventures.json
+      - ../sites:/data/sites
+    depends_on:
+      - fs-mcp
+      - content-mcp
+      - graph-mcp
+
+  site-creator:
+    build:
+      context: .
+      dockerfile: agents/site-creator/Dockerfile
+    container_name: site-creator
+    volumes:
+      - ../ventures.json:/data/ventures.json
+      - ../sites:/data/sites
+      - ../templates:/app/templates
+    depends_on:
+      - fs-mcp
+      - template-mcp
+      - graph-mcp
+
+  content-writer:
+    build:
+      context: .
+      dockerfile: agents/content-writer/Dockerfile
+    container_name: content-writer
+    volumes:
+      - ../ventures.json:/data/ventures.json
+      - ../sites:/data/sites
+    depends_on:
+      - fs-mcp
+      - content-mcp
+      - template-mcp
+
+  graph-builder:
+    build:
+      context: .
+      dockerfile: agents/graph-builder/Dockerfile
+    container_name: graph-builder
+    volumes:
+      - ../ventures.json:/data/ventures.json
+      - ../sites:/data/sites
+    depends_on:
+      - fs-mcp
+      - graph-mcp
+
+  qa-validator:
+    build:
+      context: .
+      dockerfile: agents/qa-validator/Dockerfile
+    container_name: qa-validator
+    volumes:
+      - ../ventures.json:/data/ventures.json
+      - ../sites:/data/sites
+    depends_on:
+      - fs-mcp
+      - graph-mcp
+
+volumes:
+  registry-data:

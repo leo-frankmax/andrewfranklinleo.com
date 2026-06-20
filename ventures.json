@@ -1,0 +1,1354 @@
+{
+  "version": "2.0",
+  "generated": "2026-06-19T00:00:00Z",
+  "source": "ChatGPT conversation with Andrew Franklin Leo (2026-06-15)",
+  "conglomerate": {
+    "id": "leo-global-holdings",
+    "name": "Leo Global Holdings",
+    "type": "conglomerate",
+    "mission": "Long-term vision, capital allocation, global governance, enterprise architecture",
+    "tagline": "Building the Future of Human Potential",
+    "parentId": null
+  },
+  "groups": [
+    {
+      "id": "frankmax",
+      "name": "Frankmax",
+      "type": "group",
+      "mission": "Empowering Every Professional",
+      "parentId": "leo-global-holdings",
+      "stakeholders": [
+        "Students",
+        "Professionals",
+        "Entrepreneurs",
+        "Executives",
+        "Organizations",
+        "Governments"
+      ],
+      "slug": "frankmax"
+    },
+    {
+      "id": "virginbay",
+      "name": "Virginbay",
+      "type": "group",
+      "mission": "Powering Global Commerce",
+      "parentId": "leo-global-holdings",
+      "stakeholders": [
+        "Consumers",
+        "Businesses",
+        "Governments"
+      ],
+      "slug": "virginbay"
+    },
+    {
+      "id": "glosbe",
+      "name": "Glosbe",
+      "type": "group",
+      "mission": "Connecting Every Community",
+      "parentId": "leo-global-holdings",
+      "stakeholders": [
+        "Communities",
+        "NGOs",
+        "Governments",
+        "Educational institutions"
+      ],
+      "slug": "glosbe"
+    },
+    {
+      "id": "crenza",
+      "name": "Crenza",
+      "type": "group",
+      "mission": "Stewarding Every Asset",
+      "parentId": "leo-global-holdings",
+      "stakeholders": [
+        "Individuals",
+        "Families",
+        "Enterprises",
+        "Governments"
+      ],
+      "slug": "crenza"
+    },
+    {
+      "id": "leo-technologies",
+      "name": "Leo Technologies",
+      "type": "strategic-vertical",
+      "mission": "Technological backbone of the ecosystem",
+      "parentId": "leo-global-holdings",
+      "slug": "leo-technologies"
+    },
+    {
+      "id": "leo-capital",
+      "name": "Leo Capital",
+      "type": "strategic-vertical",
+      "mission": "Finance transformation",
+      "parentId": "leo-global-holdings",
+      "slug": "leo-capital"
+    },
+    {
+      "id": "leo-ventures",
+      "name": "Leo Ventures",
+      "type": "strategic-vertical",
+      "mission": "Create future industries",
+      "parentId": "leo-global-holdings",
+      "slug": "leo-ventures"
+    },
+    {
+      "id": "leo-institute",
+      "name": "Leo Institute",
+      "type": "strategic-vertical",
+      "mission": "Advance knowledge",
+      "parentId": "leo-global-holdings",
+      "slug": "leo-institute"
+    },
+    {
+      "id": "leo-foundation",
+      "name": "Leo Foundation",
+      "type": "strategic-vertical",
+      "mission": "Inclusive prosperity",
+      "parentId": "leo-global-holdings",
+      "slug": "leo-foundation"
+    },
+    {
+      "id": "leo-global-governance-council",
+      "name": "Leo Global Governance Council",
+      "type": "strategic-vertical",
+      "mission": "Ecosystem alignment and ethical oversight",
+      "parentId": "leo-global-holdings",
+      "slug": "leo-global-governance-council"
+    }
+  ],
+  "ventures": [
+    {
+      "id": "frankmax-talent",
+      "name": "Frankmax Talent",
+      "type": "venture",
+      "mission": "Recruit and develop world-class professionals",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "recruitment",
+          "name": "Recruitment",
+          "type": "offering",
+          "parentId": "frankmax-talent",
+          "slug": "recruitment"
+        },
+        {
+          "id": "executive-search",
+          "name": "Executive Search",
+          "type": "offering",
+          "parentId": "frankmax-talent",
+          "slug": "executive-search"
+        },
+        {
+          "id": "workforce-management",
+          "name": "Workforce Management",
+          "type": "offering",
+          "parentId": "frankmax-talent",
+          "slug": "workforce-management"
+        },
+        {
+          "id": "talent-intelligence",
+          "name": "Talent Intelligence",
+          "type": "offering",
+          "parentId": "frankmax-talent",
+          "slug": "talent-intelligence"
+        },
+        {
+          "id": "career-development",
+          "name": "Career Development",
+          "type": "offering",
+          "parentId": "frankmax-talent",
+          "slug": "career-development"
+        }
+      ],
+      "slug": "frankmax-talent"
+    },
+    {
+      "id": "frankmax-learning",
+      "name": "Frankmax Learning",
+      "type": "venture",
+      "mission": "Continuous capability enhancement",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "universities",
+          "name": "Universities",
+          "type": "offering",
+          "parentId": "frankmax-learning",
+          "slug": "universities"
+        },
+        {
+          "id": "academies",
+          "name": "Academies",
+          "type": "offering",
+          "parentId": "frankmax-learning",
+          "slug": "academies"
+        },
+        {
+          "id": "certifications",
+          "name": "Certifications",
+          "type": "offering",
+          "parentId": "frankmax-learning",
+          "slug": "certifications"
+        },
+        {
+          "id": "skill-development",
+          "name": "Skill Development",
+          "type": "offering",
+          "parentId": "frankmax-learning",
+          "slug": "skill-development"
+        },
+        {
+          "id": "lifelong-learning",
+          "name": "Lifelong Learning",
+          "type": "offering",
+          "parentId": "frankmax-learning",
+          "slug": "lifelong-learning"
+        }
+      ],
+      "slug": "frankmax-learning"
+    },
+    {
+      "id": "frankmax-consulting",
+      "name": "Frankmax Consulting",
+      "type": "venture",
+      "mission": "Higher-performing institutions",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "business-strategy",
+          "name": "Business Strategy",
+          "type": "offering",
+          "parentId": "frankmax-consulting",
+          "slug": "business-strategy"
+        },
+        {
+          "id": "organizational-transformation",
+          "name": "Organizational Transformation",
+          "type": "offering",
+          "parentId": "frankmax-consulting",
+          "slug": "organizational-transformation"
+        },
+        {
+          "id": "process-excellence",
+          "name": "Process Excellence",
+          "type": "offering",
+          "parentId": "frankmax-consulting",
+          "slug": "process-excellence"
+        },
+        {
+          "id": "innovation-programs",
+          "name": "Innovation Programs",
+          "type": "offering",
+          "parentId": "frankmax-consulting",
+          "slug": "innovation-programs"
+        }
+      ],
+      "slug": "frankmax-consulting"
+    },
+    {
+      "id": "frankmax-digital",
+      "name": "Frankmax Digital",
+      "type": "venture",
+      "mission": "Technology-enabled productivity",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "enterprise-software",
+          "name": "Enterprise Software",
+          "type": "offering",
+          "parentId": "frankmax-digital",
+          "slug": "enterprise-software"
+        },
+        {
+          "id": "artificial-intelligence",
+          "name": "Artificial Intelligence",
+          "type": "offering",
+          "parentId": "frankmax-digital",
+          "slug": "artificial-intelligence"
+        },
+        {
+          "id": "automation",
+          "name": "Automation",
+          "type": "offering",
+          "parentId": "frankmax-digital",
+          "slug": "automation"
+        },
+        {
+          "id": "digital-transformation",
+          "name": "Digital Transformation",
+          "type": "offering",
+          "parentId": "frankmax-digital",
+          "slug": "digital-transformation"
+        }
+      ],
+      "slug": "frankmax-digital"
+    },
+    {
+      "id": "frankmax-leadership",
+      "name": "Frankmax Leadership",
+      "type": "venture",
+      "mission": "Future-ready leaders",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "executive-development",
+          "name": "Executive Development",
+          "type": "offering",
+          "parentId": "frankmax-leadership",
+          "slug": "executive-development"
+        },
+        {
+          "id": "leadership-coaching",
+          "name": "Leadership Coaching",
+          "type": "offering",
+          "parentId": "frankmax-leadership",
+          "slug": "leadership-coaching"
+        },
+        {
+          "id": "governance-education",
+          "name": "Governance Education",
+          "type": "offering",
+          "parentId": "frankmax-leadership",
+          "slug": "governance-education"
+        },
+        {
+          "id": "stewardship-programs",
+          "name": "Stewardship Programs",
+          "type": "offering",
+          "parentId": "frankmax-leadership",
+          "slug": "stewardship-programs"
+        }
+      ],
+      "slug": "frankmax-leadership"
+    },
+    {
+      "id": "frankmax-research",
+      "name": "Frankmax Research",
+      "type": "venture",
+      "mission": "Knowledge creation",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "industry-research",
+          "name": "Industry Research",
+          "type": "offering",
+          "parentId": "frankmax-research",
+          "slug": "industry-research"
+        },
+        {
+          "id": "systems-thinking",
+          "name": "Systems Thinking",
+          "type": "offering",
+          "parentId": "frankmax-research",
+          "slug": "systems-thinking"
+        },
+        {
+          "id": "innovation-labs",
+          "name": "Innovation Labs",
+          "type": "offering",
+          "parentId": "frankmax-research",
+          "slug": "innovation-labs"
+        },
+        {
+          "id": "thought-leadership",
+          "name": "Thought Leadership",
+          "type": "offering",
+          "parentId": "frankmax-research",
+          "slug": "thought-leadership"
+        }
+      ],
+      "slug": "frankmax-research"
+    },
+    {
+      "id": "frankmax-workforce-solutions",
+      "name": "Frankmax Workforce Solutions",
+      "type": "venture",
+      "mission": "Workforce optimization",
+      "parentId": "frankmax",
+      "offerings": [
+        {
+          "id": "workforce-planning",
+          "name": "Workforce Planning",
+          "type": "offering",
+          "parentId": "frankmax-workforce-solutions",
+          "slug": "workforce-planning"
+        },
+        {
+          "id": "contingent-staffing",
+          "name": "Contingent Staffing",
+          "type": "offering",
+          "parentId": "frankmax-workforce-solutions",
+          "slug": "contingent-staffing"
+        },
+        {
+          "id": "managed-workforce",
+          "name": "Managed Workforce",
+          "type": "offering",
+          "parentId": "frankmax-workforce-solutions",
+          "slug": "managed-workforce"
+        },
+        {
+          "id": "hr-transformation",
+          "name": "HR Transformation",
+          "type": "offering",
+          "parentId": "frankmax-workforce-solutions",
+          "slug": "hr-transformation"
+        }
+      ],
+      "slug": "frankmax-workforce-solutions"
+    },
+    {
+      "id": "virginbay-marketplace",
+      "name": "Virginbay Marketplace",
+      "type": "venture",
+      "mission": "Enable every transaction",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "consumer-commerce",
+          "name": "Consumer Commerce",
+          "type": "offering",
+          "parentId": "virginbay-marketplace",
+          "slug": "consumer-commerce"
+        },
+        {
+          "id": "b2b-commerce",
+          "name": "B2B Commerce",
+          "type": "offering",
+          "parentId": "virginbay-marketplace",
+          "slug": "b2b-commerce"
+        },
+        {
+          "id": "digital-commerce",
+          "name": "Digital Commerce",
+          "type": "offering",
+          "parentId": "virginbay-marketplace",
+          "slug": "digital-commerce"
+        },
+        {
+          "id": "global-trade",
+          "name": "Global Trade",
+          "type": "offering",
+          "parentId": "virginbay-marketplace",
+          "slug": "global-trade"
+        }
+      ],
+      "slug": "virginbay-marketplace"
+    },
+    {
+      "id": "virginbay-services",
+      "name": "Virginbay Services",
+      "type": "venture",
+      "mission": "Service-based value creation",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "professional-services",
+          "name": "Professional Services",
+          "type": "offering",
+          "parentId": "virginbay-services",
+          "slug": "professional-services"
+        },
+        {
+          "id": "managed-services",
+          "name": "Managed Services",
+          "type": "offering",
+          "parentId": "virginbay-services",
+          "slug": "managed-services"
+        },
+        {
+          "id": "on-demand-services",
+          "name": "On-Demand Services",
+          "type": "offering",
+          "parentId": "virginbay-services",
+          "slug": "on-demand-services"
+        },
+        {
+          "id": "outsourcing",
+          "name": "Outsourcing",
+          "type": "offering",
+          "parentId": "virginbay-services",
+          "slug": "outsourcing"
+        }
+      ],
+      "slug": "virginbay-services"
+    },
+    {
+      "id": "virginbay-logistics",
+      "name": "Virginbay Logistics",
+      "type": "venture",
+      "mission": "Efficient movement of goods",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "warehousing",
+          "name": "Warehousing",
+          "type": "offering",
+          "parentId": "virginbay-logistics",
+          "slug": "warehousing"
+        },
+        {
+          "id": "distribution",
+          "name": "Distribution",
+          "type": "offering",
+          "parentId": "virginbay-logistics",
+          "slug": "distribution"
+        },
+        {
+          "id": "transportation",
+          "name": "Transportation",
+          "type": "offering",
+          "parentId": "virginbay-logistics",
+          "slug": "transportation"
+        },
+        {
+          "id": "supply-chains",
+          "name": "Supply Chains",
+          "type": "offering",
+          "parentId": "virginbay-logistics",
+          "slug": "supply-chains"
+        }
+      ],
+      "slug": "virginbay-logistics"
+    },
+    {
+      "id": "virginbay-financial-services",
+      "name": "Virginbay Financial Services",
+      "type": "venture",
+      "mission": "Economic liquidity",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "payments",
+          "name": "Payments",
+          "type": "offering",
+          "parentId": "virginbay-financial-services",
+          "slug": "payments"
+        },
+        {
+          "id": "lending",
+          "name": "Lending",
+          "type": "offering",
+          "parentId": "virginbay-financial-services",
+          "slug": "lending"
+        },
+        {
+          "id": "insurance-facilitation",
+          "name": "Insurance Facilitation",
+          "type": "offering",
+          "parentId": "virginbay-financial-services",
+          "slug": "insurance-facilitation"
+        },
+        {
+          "id": "trade-finance",
+          "name": "Trade Finance",
+          "type": "offering",
+          "parentId": "virginbay-financial-services",
+          "slug": "trade-finance"
+        }
+      ],
+      "slug": "virginbay-financial-services"
+    },
+    {
+      "id": "virginbay-ventures",
+      "name": "Virginbay Ventures",
+      "type": "venture",
+      "mission": "Future enterprises",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "startup-incubation",
+          "name": "Startup Incubation",
+          "type": "offering",
+          "parentId": "virginbay-ventures",
+          "slug": "startup-incubation"
+        },
+        {
+          "id": "accelerators",
+          "name": "Accelerators",
+          "type": "offering",
+          "parentId": "virginbay-ventures",
+          "slug": "accelerators"
+        },
+        {
+          "id": "new-market-development",
+          "name": "New Market Development",
+          "type": "offering",
+          "parentId": "virginbay-ventures",
+          "slug": "new-market-development"
+        },
+        {
+          "id": "venture-building",
+          "name": "Venture Building",
+          "type": "offering",
+          "parentId": "virginbay-ventures",
+          "slug": "venture-building"
+        }
+      ],
+      "slug": "virginbay-ventures"
+    },
+    {
+      "id": "virginbay-global-trade",
+      "name": "Virginbay Global Trade",
+      "type": "venture",
+      "mission": "Cross-border commerce",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "import-export",
+          "name": "Import/Export",
+          "type": "offering",
+          "parentId": "virginbay-global-trade",
+          "slug": "import-export"
+        },
+        {
+          "id": "customs-compliance",
+          "name": "Customs Compliance",
+          "type": "offering",
+          "parentId": "virginbay-global-trade",
+          "slug": "customs-compliance"
+        },
+        {
+          "id": "international-partnerships",
+          "name": "International Partnerships",
+          "type": "offering",
+          "parentId": "virginbay-global-trade",
+          "slug": "international-partnerships"
+        }
+      ],
+      "slug": "virginbay-global-trade"
+    },
+    {
+      "id": "virginbay-innovation-markets",
+      "name": "Virginbay Innovation Markets",
+      "type": "venture",
+      "mission": "Emerging markets",
+      "parentId": "virginbay",
+      "offerings": [
+        {
+          "id": "digital-markets",
+          "name": "Digital Markets",
+          "type": "offering",
+          "parentId": "virginbay-innovation-markets",
+          "slug": "digital-markets"
+        },
+        {
+          "id": "platform-economy",
+          "name": "Platform Economy",
+          "type": "offering",
+          "parentId": "virginbay-innovation-markets",
+          "slug": "platform-economy"
+        },
+        {
+          "id": "new-business-models",
+          "name": "New Business Models",
+          "type": "offering",
+          "parentId": "virginbay-innovation-markets",
+          "slug": "new-business-models"
+        },
+        {
+          "id": "market-creation",
+          "name": "Market Creation",
+          "type": "offering",
+          "parentId": "virginbay-innovation-markets",
+          "slug": "market-creation"
+        }
+      ],
+      "slug": "virginbay-innovation-markets"
+    },
+    {
+      "id": "glosbe-communities",
+      "name": "Glosbe Communities",
+      "type": "venture",
+      "mission": "Social capital",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "professional-networks",
+          "name": "Professional Networks",
+          "type": "offering",
+          "parentId": "glosbe-communities",
+          "slug": "professional-networks"
+        },
+        {
+          "id": "interest-based-communities",
+          "name": "Interest-Based Communities",
+          "type": "offering",
+          "parentId": "glosbe-communities",
+          "slug": "interest-based-communities"
+        },
+        {
+          "id": "industry-associations",
+          "name": "Industry Associations",
+          "type": "offering",
+          "parentId": "glosbe-communities",
+          "slug": "industry-associations"
+        },
+        {
+          "id": "regional-communities",
+          "name": "Regional Communities",
+          "type": "offering",
+          "parentId": "glosbe-communities",
+          "slug": "regional-communities"
+        }
+      ],
+      "slug": "glosbe-communities"
+    },
+    {
+      "id": "glosbe-collaboration",
+      "name": "Glosbe Collaboration",
+      "type": "venture",
+      "mission": "Collective intelligence",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "knowledge-sharing",
+          "name": "Knowledge Sharing",
+          "type": "offering",
+          "parentId": "glosbe-collaboration",
+          "slug": "knowledge-sharing"
+        },
+        {
+          "id": "team-collaboration",
+          "name": "Team Collaboration",
+          "type": "offering",
+          "parentId": "glosbe-collaboration",
+          "slug": "team-collaboration"
+        },
+        {
+          "id": "innovation-networks",
+          "name": "Innovation Networks",
+          "type": "offering",
+          "parentId": "glosbe-collaboration",
+          "slug": "innovation-networks"
+        },
+        {
+          "id": "project-ecosystems",
+          "name": "Project Ecosystems",
+          "type": "offering",
+          "parentId": "glosbe-collaboration",
+          "slug": "project-ecosystems"
+        }
+      ],
+      "slug": "glosbe-collaboration"
+    },
+    {
+      "id": "glosbe-civic-networks",
+      "name": "Glosbe Civic Networks",
+      "type": "venture",
+      "mission": "Stronger societies",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "citizen-participation",
+          "name": "Citizen Participation",
+          "type": "offering",
+          "parentId": "glosbe-civic-networks",
+          "slug": "citizen-participation"
+        },
+        {
+          "id": "public-engagement",
+          "name": "Public Engagement",
+          "type": "offering",
+          "parentId": "glosbe-civic-networks",
+          "slug": "public-engagement"
+        },
+        {
+          "id": "community-governance",
+          "name": "Community Governance",
+          "type": "offering",
+          "parentId": "glosbe-civic-networks",
+          "slug": "community-governance"
+        },
+        {
+          "id": "civic-innovation",
+          "name": "Civic Innovation",
+          "type": "offering",
+          "parentId": "glosbe-civic-networks",
+          "slug": "civic-innovation"
+        }
+      ],
+      "slug": "glosbe-civic-networks"
+    },
+    {
+      "id": "glosbe-media",
+      "name": "Glosbe Media",
+      "type": "venture",
+      "mission": "Knowledge dissemination",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "publishing",
+          "name": "Publishing",
+          "type": "offering",
+          "parentId": "glosbe-media",
+          "slug": "publishing"
+        },
+        {
+          "id": "journalism",
+          "name": "Journalism",
+          "type": "offering",
+          "parentId": "glosbe-media",
+          "slug": "journalism"
+        },
+        {
+          "id": "educational-content",
+          "name": "Educational Content",
+          "type": "offering",
+          "parentId": "glosbe-media",
+          "slug": "educational-content"
+        }
+      ],
+      "slug": "glosbe-media"
+    },
+    {
+      "id": "glosbe-social-impact",
+      "name": "Glosbe Social Impact",
+      "type": "venture",
+      "mission": "Social progress",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "volunteer-programs",
+          "name": "Volunteer Programs",
+          "type": "offering",
+          "parentId": "glosbe-social-impact",
+          "slug": "volunteer-programs"
+        },
+        {
+          "id": "nonprofit-support",
+          "name": "Nonprofit Support",
+          "type": "offering",
+          "parentId": "glosbe-social-impact",
+          "slug": "nonprofit-support"
+        },
+        {
+          "id": "social-innovation",
+          "name": "Social Innovation",
+          "type": "offering",
+          "parentId": "glosbe-social-impact",
+          "slug": "social-innovation"
+        },
+        {
+          "id": "community-development",
+          "name": "Community Development",
+          "type": "offering",
+          "parentId": "glosbe-social-impact",
+          "slug": "community-development"
+        }
+      ],
+      "slug": "glosbe-social-impact"
+    },
+    {
+      "id": "glosbe-knowledge-networks",
+      "name": "Glosbe Knowledge Networks",
+      "type": "venture",
+      "mission": "Information flow",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "research-networks",
+          "name": "Research Networks",
+          "type": "offering",
+          "parentId": "glosbe-knowledge-networks",
+          "slug": "research-networks"
+        },
+        {
+          "id": "academic-collaboration",
+          "name": "Academic Collaboration",
+          "type": "offering",
+          "parentId": "glosbe-knowledge-networks",
+          "slug": "academic-collaboration"
+        },
+        {
+          "id": "industry-insights",
+          "name": "Industry Insights",
+          "type": "offering",
+          "parentId": "glosbe-knowledge-networks",
+          "slug": "industry-insights"
+        },
+        {
+          "id": "knowledge-exchange",
+          "name": "Knowledge Exchange",
+          "type": "offering",
+          "parentId": "glosbe-knowledge-networks",
+          "slug": "knowledge-exchange"
+        }
+      ],
+      "slug": "glosbe-knowledge-networks"
+    },
+    {
+      "id": "glosbe-community-development",
+      "name": "Glosbe Community Development",
+      "type": "venture",
+      "mission": "Local growth",
+      "parentId": "glosbe",
+      "offerings": [
+        {
+          "id": "urban-development",
+          "name": "Urban Development",
+          "type": "offering",
+          "parentId": "glosbe-community-development",
+          "slug": "urban-development"
+        },
+        {
+          "id": "rural-programs",
+          "name": "Rural Programs",
+          "type": "offering",
+          "parentId": "glosbe-community-development",
+          "slug": "rural-programs"
+        },
+        {
+          "id": "infrastructure-projects",
+          "name": "Infrastructure Projects",
+          "type": "offering",
+          "parentId": "glosbe-community-development",
+          "slug": "infrastructure-projects"
+        },
+        {
+          "id": "community-planning",
+          "name": "Community Planning",
+          "type": "offering",
+          "parentId": "glosbe-community-development",
+          "slug": "community-planning"
+        }
+      ],
+      "slug": "glosbe-community-development"
+    },
+    {
+      "id": "crenza-wealth",
+      "name": "Crenza Wealth",
+      "type": "venture",
+      "mission": "Financial security",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "wealth-management",
+          "name": "Wealth Management",
+          "type": "offering",
+          "parentId": "crenza-wealth",
+          "slug": "wealth-management"
+        },
+        {
+          "id": "financial-planning",
+          "name": "Financial Planning",
+          "type": "offering",
+          "parentId": "crenza-wealth",
+          "slug": "financial-planning"
+        },
+        {
+          "id": "family-offices",
+          "name": "Family Offices",
+          "type": "offering",
+          "parentId": "crenza-wealth",
+          "slug": "family-offices"
+        },
+        {
+          "id": "advisory-services",
+          "name": "Advisory Services",
+          "type": "offering",
+          "parentId": "crenza-wealth",
+          "slug": "advisory-services"
+        }
+      ],
+      "slug": "crenza-wealth"
+    },
+    {
+      "id": "crenza-investments",
+      "name": "Crenza Investments",
+      "type": "venture",
+      "mission": "Capital growth",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "venture-capital",
+          "name": "Venture Capital",
+          "type": "offering",
+          "parentId": "crenza-investments",
+          "slug": "venture-capital"
+        },
+        {
+          "id": "private-equity",
+          "name": "Private Equity",
+          "type": "offering",
+          "parentId": "crenza-investments",
+          "slug": "private-equity"
+        },
+        {
+          "id": "institutional-investments",
+          "name": "Institutional Investments",
+          "type": "offering",
+          "parentId": "crenza-investments",
+          "slug": "institutional-investments"
+        },
+        {
+          "id": "strategic-acquisitions",
+          "name": "Strategic Acquisitions",
+          "type": "offering",
+          "parentId": "crenza-investments",
+          "slug": "strategic-acquisitions"
+        }
+      ],
+      "slug": "crenza-investments"
+    },
+    {
+      "id": "crenza-real-assets",
+      "name": "Crenza Real Assets",
+      "type": "venture",
+      "mission": "Physical asset value",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "real-estate",
+          "name": "Real Estate",
+          "type": "offering",
+          "parentId": "crenza-real-assets",
+          "slug": "real-estate"
+        },
+        {
+          "id": "infrastructure",
+          "name": "Infrastructure",
+          "type": "offering",
+          "parentId": "crenza-real-assets",
+          "slug": "infrastructure"
+        },
+        {
+          "id": "industrial-assets",
+          "name": "Industrial Assets",
+          "type": "offering",
+          "parentId": "crenza-real-assets",
+          "slug": "industrial-assets"
+        },
+        {
+          "id": "land-stewardship",
+          "name": "Land Stewardship",
+          "type": "offering",
+          "parentId": "crenza-real-assets",
+          "slug": "land-stewardship"
+        }
+      ],
+      "slug": "crenza-real-assets"
+    },
+    {
+      "id": "crenza-intellectual-capital",
+      "name": "Crenza Intellectual Capital",
+      "type": "venture",
+      "mission": "Innovation protection",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "patents",
+          "name": "Patents",
+          "type": "offering",
+          "parentId": "crenza-intellectual-capital",
+          "slug": "patents"
+        },
+        {
+          "id": "copyrights",
+          "name": "Copyrights",
+          "type": "offering",
+          "parentId": "crenza-intellectual-capital",
+          "slug": "copyrights"
+        },
+        {
+          "id": "trademarks",
+          "name": "Trademarks",
+          "type": "offering",
+          "parentId": "crenza-intellectual-capital",
+          "slug": "trademarks"
+        },
+        {
+          "id": "knowledge-assets",
+          "name": "Knowledge Assets",
+          "type": "offering",
+          "parentId": "crenza-intellectual-capital",
+          "slug": "knowledge-assets"
+        }
+      ],
+      "slug": "crenza-intellectual-capital"
+    },
+    {
+      "id": "crenza-trust-services",
+      "name": "Crenza Trust Services",
+      "type": "venture",
+      "mission": "Intergenerational continuity",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "fiduciary-services",
+          "name": "Fiduciary Services",
+          "type": "offering",
+          "parentId": "crenza-trust-services",
+          "slug": "fiduciary-services"
+        },
+        {
+          "id": "governance-structures",
+          "name": "Governance Structures",
+          "type": "offering",
+          "parentId": "crenza-trust-services",
+          "slug": "governance-structures"
+        },
+        {
+          "id": "estate-planning",
+          "name": "Estate Planning",
+          "type": "offering",
+          "parentId": "crenza-trust-services",
+          "slug": "estate-planning"
+        },
+        {
+          "id": "succession-planning",
+          "name": "Succession Planning",
+          "type": "offering",
+          "parentId": "crenza-trust-services",
+          "slug": "succession-planning"
+        }
+      ],
+      "slug": "crenza-trust-services"
+    },
+    {
+      "id": "crenza-infrastructure",
+      "name": "Crenza Infrastructure",
+      "type": "venture",
+      "mission": "Physical backbone",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "energy-infrastructure",
+          "name": "Energy Infrastructure",
+          "type": "offering",
+          "parentId": "crenza-infrastructure",
+          "slug": "energy-infrastructure"
+        },
+        {
+          "id": "digital-infrastructure",
+          "name": "Digital Infrastructure",
+          "type": "offering",
+          "parentId": "crenza-infrastructure",
+          "slug": "digital-infrastructure"
+        },
+        {
+          "id": "transport-infrastructure",
+          "name": "Transport Infrastructure",
+          "type": "offering",
+          "parentId": "crenza-infrastructure",
+          "slug": "transport-infrastructure"
+        },
+        {
+          "id": "utilities",
+          "name": "Utilities",
+          "type": "offering",
+          "parentId": "crenza-infrastructure",
+          "slug": "utilities"
+        }
+      ],
+      "slug": "crenza-infrastructure"
+    },
+    {
+      "id": "crenza-strategic-holdings",
+      "name": "Crenza Strategic Holdings",
+      "type": "venture",
+      "mission": "Portfolio management",
+      "parentId": "crenza",
+      "offerings": [
+        {
+          "id": "direct-investments",
+          "name": "Direct Investments",
+          "type": "offering",
+          "parentId": "crenza-strategic-holdings",
+          "slug": "direct-investments"
+        },
+        {
+          "id": "joint-ventures",
+          "name": "Joint Ventures",
+          "type": "offering",
+          "parentId": "crenza-strategic-holdings",
+          "slug": "joint-ventures"
+        },
+        {
+          "id": "strategic-partnerships",
+          "name": "Strategic Partnerships",
+          "type": "offering",
+          "parentId": "crenza-strategic-holdings",
+          "slug": "strategic-partnerships"
+        },
+        {
+          "id": "sovereign-partnerships",
+          "name": "Sovereign Partnerships",
+          "type": "offering",
+          "parentId": "crenza-strategic-holdings",
+          "slug": "sovereign-partnerships"
+        }
+      ],
+      "slug": "crenza-strategic-holdings"
+    },
+    {
+      "id": "leo-technologies-ventures",
+      "name": "Leo Technologies Ventures",
+      "type": "venture",
+      "mission": "Technological backbone",
+      "parentId": "leo-technologies",
+      "offerings": [
+        {
+          "id": "ai-platforms",
+          "name": "AI Platforms",
+          "type": "offering",
+          "parentId": "leo-technologies-ventures",
+          "slug": "ai-platforms"
+        },
+        {
+          "id": "cloud-services",
+          "name": "Cloud Services",
+          "type": "offering",
+          "parentId": "leo-technologies-ventures",
+          "slug": "cloud-services"
+        },
+        {
+          "id": "data-analytics",
+          "name": "Data Analytics",
+          "type": "offering",
+          "parentId": "leo-technologies-ventures",
+          "slug": "data-analytics"
+        },
+        {
+          "id": "cybersecurity",
+          "name": "Cybersecurity",
+          "type": "offering",
+          "parentId": "leo-technologies-ventures",
+          "slug": "cybersecurity"
+        },
+        {
+          "id": "enterprise-platforms",
+          "name": "Enterprise Platforms",
+          "type": "offering",
+          "parentId": "leo-technologies-ventures",
+          "slug": "enterprise-platforms"
+        }
+      ],
+      "slug": "leo-technologies-ventures"
+    },
+    {
+      "id": "leo-capital-ventures",
+      "name": "Leo Capital Ventures",
+      "type": "venture",
+      "mission": "Finance transformation",
+      "parentId": "leo-capital",
+      "offerings": [
+        {
+          "id": "venture-capital-fund",
+          "name": "Venture Capital Fund",
+          "type": "offering",
+          "parentId": "leo-capital-ventures",
+          "slug": "venture-capital-fund"
+        },
+        {
+          "id": "private-equity-fund",
+          "name": "Private Equity Fund",
+          "type": "offering",
+          "parentId": "leo-capital-ventures",
+          "slug": "private-equity-fund"
+        },
+        {
+          "id": "infrastructure-finance",
+          "name": "Infrastructure Finance",
+          "type": "offering",
+          "parentId": "leo-capital-ventures",
+          "slug": "infrastructure-finance"
+        },
+        {
+          "id": "global-funds",
+          "name": "Global Funds",
+          "type": "offering",
+          "parentId": "leo-capital-ventures",
+          "slug": "global-funds"
+        }
+      ],
+      "slug": "leo-capital-ventures"
+    },
+    {
+      "id": "leo-ventures-ventures",
+      "name": "Leo Ventures Ventures",
+      "type": "venture",
+      "mission": "Create future industries",
+      "parentId": "leo-ventures",
+      "offerings": [
+        {
+          "id": "emerging-tech",
+          "name": "Emerging Tech",
+          "type": "offering",
+          "parentId": "leo-ventures-ventures",
+          "slug": "emerging-tech"
+        },
+        {
+          "id": "future-markets",
+          "name": "Future Markets",
+          "type": "offering",
+          "parentId": "leo-ventures-ventures",
+          "slug": "future-markets"
+        },
+        {
+          "id": "research-commercialization",
+          "name": "Research Commercialization",
+          "type": "offering",
+          "parentId": "leo-ventures-ventures",
+          "slug": "research-commercialization"
+        },
+        {
+          "id": "startup-incubation-program",
+          "name": "Startup Incubation Program",
+          "type": "offering",
+          "parentId": "leo-ventures-ventures",
+          "slug": "startup-incubation-program"
+        }
+      ],
+      "slug": "leo-ventures-ventures"
+    },
+    {
+      "id": "leo-institute-ventures",
+      "name": "Leo Institute Ventures",
+      "type": "venture",
+      "mission": "Advance knowledge",
+      "parentId": "leo-institute",
+      "offerings": [
+        {
+          "id": "leadership-science",
+          "name": "Leadership Science",
+          "type": "offering",
+          "parentId": "leo-institute-ventures",
+          "slug": "leadership-science"
+        },
+        {
+          "id": "organizational-systems",
+          "name": "Organizational Systems",
+          "type": "offering",
+          "parentId": "leo-institute-ventures",
+          "slug": "organizational-systems"
+        },
+        {
+          "id": "ai-research",
+          "name": "AI Research",
+          "type": "offering",
+          "parentId": "leo-institute-ventures",
+          "slug": "ai-research"
+        },
+        {
+          "id": "governance-innovation",
+          "name": "Governance Innovation",
+          "type": "offering",
+          "parentId": "leo-institute-ventures",
+          "slug": "governance-innovation"
+        }
+      ],
+      "slug": "leo-institute-ventures"
+    }
+  ],
+  "counts": {
+    "conglomerate": 1,
+    "groups": 10,
+    "ventures": 34,
+    "offerings": 170,
+    "totalPages": 215
+  },
+  "generated_by": "venture-generator",
+  "run_id": "327467a1-ad67-4cf9-b744-ac2b156a9228"
+}

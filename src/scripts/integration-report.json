@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-06-20T10:10:43.647031",
+  "pipeline": {
+    "venture_generator": {
+      "success": true,
+      "groups": 10,
+      "ventures": 32,
+      "offerings": 129,
+      "iterations": 172
+    },
+    "site_creator": {
+      "success": true,
+      "directories": 171,
+      "pages": 172,
+      "metadata": 171,
+      "iterations": 172
+    },
+    "content_writer": {
+      "success": true,
+      "enriched": 161,
+      "seo": 129,
+      "iterations": 130
+    },
+    "graph_builder": {
+      "success": true,
+      "nav_updated": true,
+      "cross_links": 32,
+      "iterations": 33
+    },
+    "qa_validator": {
+      "success": true,
+      "validated": 161,
+      "orphans": 0,
+      "broken_links": 0,
+      "validation_passed": true,
+      "iterations": 162
+    }
+  },
+  "health": {
+    "html_files": 172,
+    "json_files": 301,
+    "empty_files": 0,
+    "missing_title": 0,
+    "missing_nav": 1,
+    "missing_footer": 172,
+    "orphan_pages": [],
+    "broken_internal_links": [],
+    "issues": []
+  },
+  "drift": {
+    "orphaned_dirs": [],
+    "missing_pages": [],
+    "extra_files": [],
+    "stale_metadata": [],
+    "issues": [
+      "ventures.json not found"
+    ]
+  },
+  "all_passed": true
+}
