@@ -306,6 +306,7 @@ jobs:
       - name: Write deploy verification summary
         if: always()
         run: |
+          New-Item -ItemType Directory -Force -Path artifacts/deploy-verification | Out-Null
           $summary = @{
             trace_run_id = "$env:TRACE_RUN_ID"
             docs_health = "${{ steps.docs_health.outcome }}"
