@@ -114,6 +114,11 @@ class SiteCreator(AgentBase):
                         result['pages_created'] += 1
 
             result['success'] = True
+            self.emit_success({
+              'directories_created': result['directories_created'],
+              'pages_created': result['pages_created'],
+              'metadata_created': result['metadata_created'],
+            })
 
         except Exception as e:
             self.emit_failure(e, {'groups': len(ventures_data.get('groups', []))})
@@ -345,7 +350,7 @@ class SiteCreator(AgentBase):
 </html>"""
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     data_root = '/data'
     ventures_path = Path(data_root) / 'ventures.json'
 

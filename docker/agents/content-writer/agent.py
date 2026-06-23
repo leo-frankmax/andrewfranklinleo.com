@@ -63,6 +63,10 @@ class ContentWriter(AgentBase):
                     result['pages_enriched'] += 1
 
             result['success'] = True
+            self.emit_success({
+              'pages_enriched': result['pages_enriched'],
+              'seo_generated': result['seo_generated'],
+            })
 
         except Exception as e:
             self.emit_failure(e, {'pages_enriched': result['pages_enriched']})
@@ -180,7 +184,7 @@ class ContentWriter(AgentBase):
         }
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     data_root = '/data'
     ventures_path = Path(data_root) / 'ventures.json'
 

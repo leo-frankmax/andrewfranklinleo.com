@@ -68,6 +68,11 @@ class GraphBuilder(AgentBase):
                         result['cross_links_added'] += 1
 
             result['success'] = True
+            self.emit_success({
+                'nav_updated': result['nav_updated'],
+                'cross_links_added': result['cross_links_added'],
+                'metadata_updated': result['metadata_updated'],
+            })
 
         except Exception as e:
             self.emit_failure(e, {'nav_updated': result['nav_updated']})
@@ -133,7 +138,7 @@ class GraphBuilder(AgentBase):
         return f'<section class="related"><h2>Related Ventures</h2><div class="grid stagger">{items}</div></section>'
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     data_root = '/data'
     ventures_path = Path(data_root) / 'ventures.json'
 

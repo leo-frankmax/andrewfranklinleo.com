@@ -82,6 +82,12 @@ class QaValidator(AgentBase):
                 len(result['broken_links']) == 0
             )
             result['success'] = True
+            self.emit_success({
+                'pages_validated': result['pages_validated'],
+                'validation_passed': result['validation_passed'],
+                'orphan_count': len(result['orphan_pages']),
+                'broken_links_count': len(result['broken_links']),
+            })
 
         except Exception as e:
             self.emit_failure(e, {'pages_validated': result['pages_validated']})
@@ -111,7 +117,7 @@ class QaValidator(AgentBase):
         return {'orphans': orphans, 'total_nodes': len(node_ids)}
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     data_root = '/data'
     ventures_path = Path(data_root) / 'ventures.json'
 

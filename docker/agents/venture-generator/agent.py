@@ -88,6 +88,11 @@ class VentureGenerator(AgentBase):
 
             result['success'] = True
             result['ventures_data'] = ventures_data
+            self.emit_success({
+                'groups_processed': result['groups_processed'],
+                'ventures_created': result['ventures_created'],
+                'offerings_created': result['offerings_created'],
+            })
 
         except Exception as e:
             self.emit_failure(e, {'groups': len(ventures_data.get('groups', []))})
@@ -117,7 +122,7 @@ class VentureGenerator(AgentBase):
         return {'valid': len(errors) == 0, 'errors': errors}
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     data_root = '/data'
     ventures_path = Path(data_root) / 'ventures.json'
 

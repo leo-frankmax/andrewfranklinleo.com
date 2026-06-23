@@ -73,6 +73,49 @@ class TestGraphBuilder:
         same_group = [r for r in related if r['reason'] == 'same-group']
         assert len(same_group) >= 1
 
+    def test_build_global_nav_skips_non_group(self):
+        data = {
+            'groups': [
+                {'id': 'frankmax', 'name': 'Frankmax', 'type': 'group'},
+                {'id': 'not-a-group', 'name': 'Ignore Me', 'type': 'venture'},
+            ],
+            'ventures': SAMPLE_DATA['ventures'],
+        }
+        nav = self.agent._build_global_nav(data)
+        assert len(nav['groups']) == 1
+        assert nav['groups'][0]['label'] == 'Frankmax'
+
+    def test_finds_cross_group_related_and_limits(self):
+        data = {
+            'groups': SAMPLE_DATA['groups'],
+            'ventures': [
+                {'id': 'v1', 'name': 'V1', 'parentId': 'g1'},
+                {'id': 'v2', 'name': 'V2', 'parentId': 'g1'},
+                {'id': 'v3', 'name': 'V3', 'parentId': 'g2'},
+                {'id': 'v4', 'name': 'V4', 'parentId': 'g3'},
+                {'id': 'v5', 'name': 'V5', 'parentId': 'g4'},
+                {'id': 'v6', 'name': 'V6', 'parentId': 'g5'},
+            ],
+        }
+        related = self.agent._find_related(data['ventures'][0], data)
+        assert len(related) == 3
+        assert any(r['reason'] == 'cross-group' for r in related)
+
+    def test_ecosystem_flows_default_and_mapped(self):
+        mapped = self.agent._get_ecosystem_flows('frankmax-talent', SAMPLE_DATA)
+        default = self.agent._get_ecosystem_flows('unknown', SAMPLE_DATA)
+        assert mapped['downstream'] == ['virginbay-services']
+        assert default == {'upstream': [], 'downstream': []}
+
+    def test_render_cross_links_empty(self):
+        assert self.agent._render_cross_links([]) == ''
+
+    def test_run_continues_when_venture_dir_missing(self):
+        shutil.rmtree(Path(self.tmpdir) / 'sites' / 'leo-global-holdings' / 'frankmax' / 'frankmax-learning')
+        result = self.agent.run(SAMPLE_DATA)
+        assert result['success'] is True
+        assert result['metadata_updated'] >= 1
+
     def test_iterations_tracked(self):
         self.agent.run(SAMPLE_DATA)
         assert self.agent.iteration_count > 0
