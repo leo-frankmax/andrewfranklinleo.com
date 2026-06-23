@@ -229,7 +229,6 @@ jobs:
             Start-Sleep -Seconds 2
           }
 
-          if (Test-Path artifacts/deploy-verification) { Remove-Item -Recurse -Force artifacts/deploy-verification }
           New-Item -ItemType Directory -Force -Path artifacts/deploy-verification | Out-Null
           $fanout | ConvertTo-Json -Depth 10 | Out-File "artifacts/deploy-verification/trace-fanout-$env:TRACE_RUN_ID.json" -Encoding utf8
 
