@@ -46,6 +46,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set deterministic trace run id
+        id: trace_id
+        run: |
+          $shortSha = "${{ github.sha }}".Substring(0, 12)
+          $traceRunId = "gh-${{ github.run_id }}-${{ github.run_attempt }}-$shortSha"
+          "TRACE_RUN_ID=$traceRunId" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "trace_run_id=$traceRunId" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          Write-Host "Trace run id: $traceRunId"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -57,6 +66,12 @@ jobs:
       - name: Run TypeScript tests
         run: npx vitest run
 
+      - name: Install Python test dependencies
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath -m pip install --upgrade pip
+          & $pythonPath -m pip install pytest pytest-cov
+
       - name: Run MCP server tests
         run: |
           $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
@@ -65,7 +80,7 @@ jobs:
           foreach ($server in $servers) {
             Write-Host "Testing $server..."
             Push-Location "docker/mcp-servers/$server"
-            & $pythonPath -m pytest tests/ -v --tb=short
+            & $pythonPath -m pytest tests/ -v --tb=short --cov=. --cov-branch --cov-report=term-missing --cov-fail-under=90
             Pop-Location
           }
 
@@ -77,7 +92,7 @@ jobs:
           foreach ($agent in $agents) {
             Write-Host "Testing $agent..."
             Push-Location "docker/agents/$agent"
-            & $pythonPath -m pytest tests/ -v --tb=short
+            & $pythonPath -m pytest tests/ -v --tb=short --cov=. --cov-branch --cov-report=term-missing --cov-fail-under=90
             Pop-Location
           }
 
@@ -90,6 +105,15 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set deterministic trace run id
+        id: trace_id
+        run: |
+          $shortSha = "${{ github.sha }}".Substring(0, 12)
+          $traceRunId = "gh-${{ github.run_id }}-${{ github.run_attempt }}-$shortSha"
+          "TRACE_RUN_ID=$traceRunId" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "trace_run_id=$traceRunId" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          Write-Host "Trace run id: $traceRunId"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -108,10 +132,19 @@ jobs:
       - name: Start MCP servers
         run: docker compose -f docker/compose.yml up -d fs-mcp content-mcp template-mcp graph-mcp registry-mcp
 
+      - name: Verify tracebox strict fan-out tests (Redis + Chroma)
+        run: docker compose -f docker/compose.yml exec -T tracebox python -m pytest -q /app/tests/test_store_fanout.py
+
       - name: Wait for MCP servers
         run: |
           Write-Host "Waiting for MCP servers to start..."
           Start-Sleep -Seconds 10
+
+      - name: Trace preflight gate (pre-generation)
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath scripts/hooks/trace-preflight.py
+          if ($LASTEXITCODE -ne 0) { throw "Trace preflight failed before generation." }
 
       - name: Run venture-generator agent
         run: |
@@ -132,6 +165,74 @@ jobs:
       - name: Run qa-validator agent
         run: docker compose -f docker/compose.yml run --rm --no-deps qa-validator
 
+      - name: Emit workflow trace smoke event
+        run: |
+          $body = @{
+            event_type = 'workflow_trace_smoke'
+            component = 'github-actions'
+            payload = @{
+              run_id = "$env:TRACE_RUN_ID"
+              workflow = "${{ github.workflow }}"
+              repository = "${{ github.repository }}"
+              run_attempt = "${{ github.run_attempt }}"
+            }
+          } | ConvertTo-Json -Depth 5
+
+          $response = Invoke-RestMethod -Method Post `
+            -Uri "http://localhost:8088/v1/events" `
+            -ContentType "application/json" `
+            -Body $body
+
+          if ($response.accepted -ne $true) {
+            throw "Trace smoke event was not accepted."
+          }
+
+          if ($response.schema_version -ne 'v1') {
+            throw "Trace smoke event returned unexpected schema_version=$($response.schema_version)."
+          }
+
+          $failedStores = @($response.failed_stores)
+          if ($failedStores.Count -gt 0) {
+            throw "Trace smoke event failed_stores must be empty but got: $($failedStores -join ', ')"
+          }
+
+          if (Test-Path artifacts/deploy-verification) { Remove-Item -Recurse -Force artifacts/deploy-verification }
+          New-Item -ItemType Directory -Force -Path artifacts/deploy-verification | Out-Null
+          $response | ConvertTo-Json -Depth 10 | Out-File "artifacts/deploy-verification/trace-smoke-response-$env:TRACE_RUN_ID.json" -Encoding utf8
+
+      - name: Assert trace fan-out counts per store
+        id: trace_fanout
+        run: |
+          $requiredStores = @('postgres', 'mongo', 'redis', 'neo4j', 'chroma')
+          $maxAttempts = 10
+          $fanout = $null
+
+          for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+            $fanout = Invoke-RestMethod -Method Get -Uri "http://localhost:8088/v1/fanout/by-run/$env:TRACE_RUN_ID"
+            $missing = @()
+
+            foreach ($store in $requiredStores) {
+              $value = [int]$fanout.counts.$store
+              if ($value -lt 1) {
+                $missing += "$store=$value"
+              }
+            }
+
+            if ($missing.Count -eq 0) {
+              break
+            }
+
+            if ($attempt -eq $maxAttempts) {
+              throw "Trace fan-out assertion failed for run_id=$env:TRACE_RUN_ID :: $($missing -join ', ')"
+            }
+
+            Start-Sleep -Seconds 2
+          }
+
+          if (Test-Path artifacts/deploy-verification) { Remove-Item -Recurse -Force artifacts/deploy-verification }
+          New-Item -ItemType Directory -Force -Path artifacts/deploy-verification | Out-Null
+          $fanout | ConvertTo-Json -Depth 10 | Out-File "artifacts/deploy-verification/trace-fanout-$env:TRACE_RUN_ID.json" -Encoding utf8
+
       - name: Validate generated structure
         run: npx tsx src/scripts/validate-structure.ts
 
@@ -145,16 +246,138 @@ jobs:
           $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
           & $pythonPath src/scripts/drift-detection.py .
 
-      - name: Stop MCP servers
-        if: always()
-        run: docker compose -f docker/compose.yml down
+      - name: Backup existing docs
+        run: |
+          if (Test-Path docs_backup) { Remove-Item -Recurse -Force docs_backup }
+          if (Test-Path docs) { Copy-Item -Recurse docs docs_backup }
 
       - name: Copy sites to docs for GitHub Pages
         run: |
           if (Test-Path docs) { Remove-Item -Recurse -Force docs }
           Copy-Item -Recurse sites/leo-global-holdings docs
 
+      - name: Prepare deploy verification artifacts
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts/deploy-verification | Out-Null
+
+      - name: Trace preflight gate (pre-deploy)
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath scripts/hooks/trace-preflight.py
+          if ($LASTEXITCODE -ne 0) { throw "Trace preflight failed before deploy verification." }
+
+      - name: Post-copy docs health check
+        id: docs_health
+        continue-on-error: true
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath src/scripts/health-check.py docs *>&1 | Tee-Object -FilePath artifacts/deploy-verification/docs-health.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Post-copy docs link audit
+        id: docs_links
+        continue-on-error: true
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath src/scripts/link-audit.py docs *>&1 | Tee-Object -FilePath artifacts/deploy-verification/docs-link-audit.log
+          if (Test-Path src/scripts/link-audit-report.json) {
+            Copy-Item src/scripts/link-audit-report.json artifacts/deploy-verification/link-audit-report.json -Force
+          }
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Post-copy docs smoke checks
+        id: docs_smoke
+        continue-on-error: true
+        run: |
+          $pythonPath = "C:\Users\Andrew Franklin Leo\AppData\Local\Programs\Python\Python312\python.exe"
+          & $pythonPath src/scripts/smoke-check.py docs *>&1 | Tee-Object -FilePath artifacts/deploy-verification/docs-smoke-check.log
+          if (Test-Path src/scripts/smoke-check-report.json) {
+            Copy-Item src/scripts/smoke-check-report.json artifacts/deploy-verification/smoke-check-report.json -Force
+          }
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Roll back docs on failed verification
+        if: steps.docs_health.outcome == 'failure' || steps.docs_links.outcome == 'failure' || steps.docs_smoke.outcome == 'failure'
+        run: |
+          Write-Host "Docs verification failed. Rolling back to previous docs snapshot."
+          if (Test-Path docs) { Remove-Item -Recurse -Force docs }
+          if (Test-Path docs_backup) { Copy-Item -Recurse docs_backup docs }
+
+      - name: Write deploy verification summary
+        if: always()
+        run: |
+          $summary = @{
+            trace_run_id = "$env:TRACE_RUN_ID"
+            docs_health = "${{ steps.docs_health.outcome }}"
+            docs_links = "${{ steps.docs_links.outcome }}"
+            docs_smoke = "${{ steps.docs_smoke.outcome }}"
+            rollback_applied = if ("${{ steps.docs_health.outcome }}" -eq "failure" -or "${{ steps.docs_links.outcome }}" -eq "failure") { "yes" } else { "no" }
+          }
+          $summary | ConvertTo-Json | Out-File "artifacts/deploy-verification/summary-$env:TRACE_RUN_ID.json" -Encoding utf8
+
+      - name: Capture dead-letter queue artifact
+        if: always()
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts/deploy-verification | Out-Null
+          $deadLetterCheck = docker compose -f docker/compose.yml exec -T tracebox sh -lc "if [ -s /data/dead-letter.jsonl ]; then echo present; else echo empty; fi"
+          $status = ($deadLetterCheck | Out-String).Trim()
+
+          if ($status -eq 'present') {
+            docker compose -f docker/compose.yml exec -T tracebox sh -lc "cat /data/dead-letter.jsonl" | Out-File "artifacts/deploy-verification/dead-letter-$env:TRACE_RUN_ID.jsonl" -Encoding utf8
+            Write-Host "::warning::Dead-letter events detected and archived for trace run $env:TRACE_RUN_ID"
+          } else {
+            "status=empty" | Out-File "artifacts/deploy-verification/dead-letter-$env:TRACE_RUN_ID.status" -Encoding utf8
+          }
+
+      - name: Upload deploy verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-verification-report-${{ steps.trace_id.outputs.trace_run_id }}
+          path: artifacts/deploy-verification
+          if-no-files-found: warn
+
+      - name: Fail pipeline if docs verification failed
+        if: steps.docs_health.outcome == 'failure' || steps.docs_links.outcome == 'failure' || steps.docs_smoke.outcome == 'failure'
+        run: |
+          Write-Error "Post-copy docs verification failed and rollback was applied."
+          exit 1
+
+      - name: Cleanup docs backup
+        if: always()
+        run: |
+          if (Test-Path docs_backup) { Remove-Item -Recurse -Force docs_backup }
+
+      - name: Stop MCP servers
+        if: always()
+        run: docker compose -f docker/compose.yml down
+
+      - name: Generate workflow summary
+        if: always()
+        run: |
+          "# 🚀 Site Generation Complete" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8
+          "" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "## Deployment Verification Status" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          $health_status = if ("${{ steps.docs_health.outcome }}" -eq "success") { "✅ PASS" } else { "❌ FAIL" }
+          $links_status = if ("${{ steps.docs_links.outcome }}" -eq "success") { "✅ PASS" } else { "❌ FAIL" }
+          $smoke_status = if ("${{ steps.docs_smoke.outcome }}" -eq "success") { "✅ PASS" } else { "❌ FAIL" }
+          "" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "| Check | Status |" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "|--------|--------|" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "| Health Check | $health_status |" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "| Link Audit | $links_status |" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "| Smoke Tests | $smoke_status |" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "## Artifacts" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "Trace Run ID: **$env:TRACE_RUN_ID**" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "Deployment verification reports available in **deploy-verification-report-${{ steps.trace_id.outputs.trace_run_id }}** artifact." | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          "**Run**: [${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+
       - name: Commit and push generated content
+        if: steps.docs_health.outcome == 'success' && steps.docs_links.outcome == 'success' && steps.docs_smoke.outcome == 'success'
         run: |
           git config user.name "afl-bot"
           git config user.email "bot@andrewfranklinleo.com"
@@ -166,3 +389,12 @@ jobs:
           } else {
             Write-Host "No changes to commit"
           }
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          Write-Host "::warning::Pipeline failed. Check deployment verification artifacts for details."
+          Write-Host "Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          Write-Host "Trace fanout endpoint: http://localhost:8088/v1/fanout/by-run/$env:TRACE_RUN_ID"
+          Write-Host "Trace artifact: artifacts/deploy-verification/trace-fanout-$env:TRACE_RUN_ID.json"
+          Write-Host "Summary artifact: artifacts/deploy-verification/summary-$env:TRACE_RUN_ID.json"
